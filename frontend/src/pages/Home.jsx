@@ -8,6 +8,9 @@ const Home = () => {
     <div className="home">
         <Navbar></Navbar>
         <h1>Bienvenido a Gym360 </h1>
+
+        <p>Tu salud , simplificada</p>
+        <p>Unifica todo lo relacionado con el mundo del entrenamiento de manera gratuita . </p>
      
     </div>
   )
