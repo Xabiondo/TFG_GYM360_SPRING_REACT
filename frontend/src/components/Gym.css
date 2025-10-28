@@ -4,23 +4,34 @@
   align-items: flex-start;
   width: 100%;
   padding: 16px;
-
   justify-content: center;
-
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #1a1a1a;
+  background-color: #2a2a2a;
   box-sizing: border-box;
   margin-bottom: 16px;
-  gap: 100px;
+  gap: 50px;
 }
 .gym-features{
     display: flex ;
-    ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
     border-radius: 15px;
     flex-direction: column;
+    width: 45%;
+    
+    
+}
+.gym-features p {
+    font-size: large;
 
-    width: 40%;
+    
+}
+.gym-features h1 {
+    font-size: xx-large;
+    margin-bottom: 20px;
+    color: #646cff;
+   
 }
 .gym-features button{
     margin-top: 100px;
@@ -30,7 +41,7 @@
 
 .gym-image {
 
-  width: 40%;
+  width: 45%;
 }
 
 .gym-image img {
