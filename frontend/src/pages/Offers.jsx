@@ -1,5 +1,4 @@
 
-
 import React from 'react'
 import Offer from '../components/Offer'
 import Navbar from '../components/Navbar'   
