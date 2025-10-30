@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Register = () => {
@@ -7,10 +7,40 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle registration logic
-  }
+
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+    const usuarioData = {
+      email: email,
+      contrasena: password
+    }
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/signup", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(usuarioData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Registro exitoso');
+       
+      } else {
+        alert('Error: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('No se pudo conectar con el servidor');
+    }
+  };
 
   return (
     <div className="auth-container">
@@ -21,7 +51,7 @@ const Register = () => {
             <label htmlFor="name">Nombre</label>
             <input
               type="text"
-              id="name"
+              id="nombre"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -41,17 +71,17 @@ const Register = () => {
             <label htmlFor="password">Contraseña</label>
             <input
               type="password"
-              id="password"
+              id="contrasena"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
-            <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+            <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
             <input
               type="password"
-              id="confirmPassword"
+              id="confirmarContrasena"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required

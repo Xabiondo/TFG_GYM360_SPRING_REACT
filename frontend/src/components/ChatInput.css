@@ -1,0 +1,14 @@
+.chat-input {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* ← Centrado HORIZONTAL */
+  align-items: center;     /* ← Centrado VERTICAL (opcional) */
+  padding: 20px 0;
+}
+
+.chat-input-field {
+  width: 100px; /* o mejor: width: 300px o 100% con max-width */
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box; /* ¡importante si usas padding! */
+}

@@ -30,7 +30,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-right">
-        <img src='/src/assets/doctor.png' alt="User" width={40} />
+        <img src='./assets/doctor.png' alt="User" width={40} />
       </div>
     </nav>
   );
