@@ -6,6 +6,7 @@ import Offers from './pages/Offers'
 import Login from './pages/Login'
 import PersonalTrainer from './pages/PersonalTrainer'
 import Register from './pages/Register'
+import MyProfile from './pages/MyProfile'
 
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path='/personal-trainer' element = {< PersonalTrainer/>}/>
+          <Route path='/my-profile' element = {<MyProfile/>}/>
         </Routes>
       </main>
     </div>

@@ -30,7 +30,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-right">
+        <Link to="/my-profile">
         <img src='./assets/doctor.png' alt="User" width={40} />
+        </Link>
       </div>
     </nav>
   );

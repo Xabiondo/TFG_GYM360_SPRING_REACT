@@ -13,6 +13,7 @@ public class Usuario {
 
     private String nombre;
 
+    @Column(unique = true)
     private String email ;
 
     private int codigoPostal;

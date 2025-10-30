@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+
 
 
   const handleSubmit = async (e) => {
@@ -16,6 +17,7 @@ const Register = () => {
       return;
     }
     const usuarioData = {
+      nombre: name , 
       email: email,
       contrasena: password
     }
@@ -32,6 +34,8 @@ const Register = () => {
 
       if (data.success) {
         alert('Registro exitoso');
+        localStorage.setItem('user', JSON.stringify(data)); 
+        <Link to = '/inicio'></Link>
        
       } else {
         alert('Error: ' + data.message);
