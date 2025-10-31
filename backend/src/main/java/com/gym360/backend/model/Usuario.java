@@ -3,6 +3,8 @@ package com.gym360.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -18,7 +20,15 @@ public class Usuario {
 
     private int codigoPostal;
 
+    private int latitud ;
+
+    private int longitud;
+
+
     private String contrasena ;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Oferta> ofertas;
 
     public Usuario(){}
 
