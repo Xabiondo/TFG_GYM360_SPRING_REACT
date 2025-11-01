@@ -13,7 +13,6 @@ public class UsuarioDetalleServicio implements UserDetailsService {
 
     private final UsuarioRepositorio usuarioRepositorio;
 
-    // Inyección por constructor (mejor práctica)
     public UsuarioDetalleServicio(UsuarioRepositorio usuarioRepositorio) {
         this.usuarioRepositorio = usuarioRepositorio;
     }
@@ -25,7 +24,7 @@ public class UsuarioDetalleServicio implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no encontrado con email: " + email);
         }
 
-        // Construimos el UserDetails que Spring Security necesita
+
         return User.builder()
                 .username(usuario.getEmail())
                 .password(usuario.getContrasena())

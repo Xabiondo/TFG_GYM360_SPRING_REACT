@@ -32,9 +32,9 @@ const MyProfile = () => {
         <Navbar></Navbar>
       <h2>Mi Perfil</h2>
       <div className="perfil-info">
-        <p><strong>Nombre:</strong> {usuario.nombre}</p>
-        <p><strong>Email:</strong> {usuario.email}</p>
-        <p><strong>ID:</strong> {usuario.id}</p>
+        <p><strong>Bienvenido :</strong> {usuario.nombre}</p>
+        
+
       </div>
     </div>
 
