@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
+import GymCalendar from "../components/GymCalendar";
 
 const MyProfile = () => {
 
@@ -33,6 +34,8 @@ const MyProfile = () => {
       <h2>Mi Perfil</h2>
       <div className="perfil-info">
         <p><strong>Bienvenido :</strong> {usuario.nombre}</p>
+
+        <GymCalendar></GymCalendar>
         
 
       </div>

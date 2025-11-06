@@ -3,6 +3,22 @@
   display: flex;
   flex-direction: column;
 }
+/*Aquí esta el calendario*/
+.react-calendar__month-view__days__day {
+  color: black;
+
+}
+.react-calendar--navigation{
+  color: black;
+}
+.react-calendar__navigation button{
+  color: #535bf2;
+  font-weight: bold;
+}
+.react-calendar{
+  padding: 20px;
+  border-radius: 20px;
+}
 
 /*Aquí esta la sección de Entrenador personal */
 
