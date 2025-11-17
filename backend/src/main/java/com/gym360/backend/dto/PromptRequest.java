@@ -1,15 +1,15 @@
 package com.gym360.backend.dto;
 
 public class PromptRequest {
-    private String promt;
+    private String prompt;
 
 
 
-    public String getPromt() {
-        return promt;
+    public String getPrompt() {
+        return prompt;
     }
 
-    public void setPromt(String promt) {
-        this.promt = promt;
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 }
