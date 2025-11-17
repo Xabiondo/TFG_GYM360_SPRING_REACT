@@ -1,4 +1,4 @@
-package com.gym360.backend.service;
+/*package com.gym360.backend.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,4 +28,4 @@ public class GooglePlacesServicio {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url, Map.class);
     }
-}
+}*/
