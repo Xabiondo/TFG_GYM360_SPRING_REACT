@@ -14,7 +14,7 @@ const Offers = () => {
 
     <div className="offers">
     <Navbar></Navbar>
-      <h1>Ofertas Especiales</h1>
+      <h1>Ofertas Fitness</h1>
       <div className="offers-grid">
         {offers.map(offer => (
           <Offer key={offer.id} {...offer} />

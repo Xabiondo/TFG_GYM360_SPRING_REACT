@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
+
 
 const Register = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-
-
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth(); // <-- Nuevo
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden");
       return;
     }
+
     const usuarioData = {
-      nombre: name , 
+      nombre: name,
       email: email,
       contrasena: password
-    }
+    };
+
     try {
       const response = await fetch("http://localhost:8080/api/auth/signup", {
         method: 'POST',
@@ -34,9 +38,8 @@ const Register = () => {
 
       if (data.success) {
         alert('Registro exitoso');
-        localStorage.setItem('user', JSON.stringify(data)); 
-        <Link to = '/inicio'></Link>
-       
+        login(data); // <-- Loguea al usuario recién registrado
+        navigate('/inicio'); // <-- Redirige a la app
       } else {
         alert('Error: ' + data.message);
       }
@@ -96,7 +99,7 @@ const Register = () => {
         <p>¿Ya tienes cuenta? <Link to="/login">Inicia Sesión</Link></p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
+import {useAuth} from '../context/AuthContext.jsx'
 
 const Navbar = () => {
+
+  const {user} = useAuth();
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -25,14 +28,21 @@ const Navbar = () => {
             <Link to="/personal-trainer">Entrenador personal</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            {user ? (<Link to="/logout">Cerrar Sesión</Link>):null }
           </li>
+
         </ul>
       </div>
       <div className="navbar-right">
-        <Link to="/my-profile">
+        {user ? (
+           <Link to="/my-profile">
         <img src='./assets/doctor.png' alt="User" width={40} />
-        </Link>
+        </Link>  ) :(
+          <Link to="/login" className="login-button">
+            Iniciar Sesión
+          </Link>
+        )}
+       
       </div>
     </nav>
   );

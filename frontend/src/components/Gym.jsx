@@ -4,8 +4,6 @@ import './Gym.css';
 
 const Gym = ({ id, nombre, precio, localizacion, notaMedia, imagen }) => {
 
-
-
     return (
         <div className="gym-card">
             <div className="gym-image">

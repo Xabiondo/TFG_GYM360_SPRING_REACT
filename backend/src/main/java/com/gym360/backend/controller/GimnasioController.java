@@ -11,6 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("http://localhost:5173")
 public class GimnasioController {
 
-    @Autowired
-    private GooglePlaces
+
 }
