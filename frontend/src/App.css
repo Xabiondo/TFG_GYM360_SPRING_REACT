@@ -134,3 +134,253 @@ body {
   .offers-header h1 { font-size: 2.5rem; }
   .offers-container { padding: 2rem 1rem; }
 }
+
+/*Estilos del calendario*/
+/* --- ESTILOS ESPECÍFICOS DE PERFIL --- */
+
+/* Grid asimétrico: La tarjeta de usuario ocupa menos que el calendario */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* 1 parte usuario, 2 partes calendario */
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Tarjeta de Usuario (Hereda estilos base si quieres, o los definimos custom) */
+.profile-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Avatar Circular con Gradiente */
+.avatar-circle {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #fff, #888);
+  color: #000;
+  font-size: 3rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  border: 4px solid var(--bg-card); /* Anillo exterior */
+}
+
+.user-role {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.profile-info h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.user-email {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* Estadísticas rápidas */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Botón secundario (Outline) */
+.secondary-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.secondary-btn:hover {
+  border-color: var(--text-main);
+  background: rgba(255,255,255,0.05);
+}
+
+/* --- CONTENEDOR DEL CALENDARIO --- */
+.calendar-container-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 400px;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.badge-info {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Wrapper para centrar el calendario si es necesario */
+.calendar-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 850px) {
+  .profile-grid {
+    grid-template-columns: 1fr; /* En móvil, una columna */
+  }
+  
+  .calendar-container-card {
+    padding: 1rem;
+  }
+}
+/* =========================================
+   CUSTOM REACT CALENDAR STYLES (Stealth Mode)
+   ========================================= */
+
+/* 1. Contenedor Principal */
+.react-calendar {
+  width: 100% !important;
+  max-width: 100%;
+  background: transparent !important; /* Quitamos fondo blanco */
+  border: none !important;            /* Quitamos bordes feos */
+  font-family: 'Inter', sans-serif !important;
+  line-height: 1.125em;
+}
+
+/* 2. Navegación (Mes y Flechas) */
+.react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none !important;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main) !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: var(--bg-hover) !important;
+}
+
+/* Deshabilitar botones (si llegas al límite) */
+.react-calendar__navigation button[disabled] {
+  opacity: 0.3;
+  background-color: transparent !important;
+}
+
+/* 3. Días de la Semana (Lun, Mar, Mie...) */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--text-muted); /* Color gris técnico */
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+/* Quitamos el subrayado de puntos que ponen algunos navegadores en <abbr> */
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  cursor: default;
+}
+
+/* 4. Los Días (Tiles) */
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 12px 6px;
+  background: transparent;
+  text-align: center;
+  line-height: 16px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  border-radius: 8px; /* Días redondeados */
+  transition: all 0.2s ease;
+}
+
+/* Hover en los días */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: var(--bg-hover) !important;
+  color: white;
+}
+
+/* 5. Día SELECCIONADO (Active) */
+.react-calendar__tile--active,
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: var(--text-main) !important; /* Fondo Blanco */
+  color: black !important;                 /* Texto Negro */
+  font-weight: 800;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* 6. Día ACTUAL (Now) - Si no está seleccionado */
+.react-calendar__tile--now {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--accent-secondary, #3b82f6) !important;
+  font-weight: bold;
+}
+
+/* Si el día actual también está seleccionado, gana el estilo de seleccionado */
+.react-calendar__tile--now.react-calendar__tile--active {
+  background: var(--text-main) !important;
+  color: black !important;
+}
+
+/* 7. Días de otros meses (Neighboring Month) */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #333 !important; /* Muy oscuros para que no molesten */
+}

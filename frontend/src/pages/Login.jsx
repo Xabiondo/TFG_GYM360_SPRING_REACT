@@ -43,7 +43,7 @@ const Login = () => {
       
       if (data.success) {
         login(data);
-        navigate('/inicio');
+        navigate('/');
       } else {
         alert('Error: ' + data.message);
       }

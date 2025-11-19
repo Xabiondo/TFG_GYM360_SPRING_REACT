@@ -16,11 +16,12 @@ import java.util.ArrayList;
 @CrossOrigin("http://localhost:5173")
 public class GimnasioController {
 
-    public ResponseEntity<ArrayList<Gimnasio>> gimnasiosCercanos(@RequestParam double latitud , double longuitud){
+    /*public ResponseEntity<ArrayList<Gimnasio>> gimnasiosCercanos(@RequestParam double latitud , double longuitud){
+        ret
 
         
 
-    }
+    }*/
 
 
 

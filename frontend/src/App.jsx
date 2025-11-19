@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import PersonalTrainer from './pages/PersonalTrainer'
 import Register from './pages/Register'
 import MyProfile from './pages/MyProfile'
+import { Logout } from './pages/Logout'
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path='/personal-trainer' element = {< PersonalTrainer/>}/>
           <Route path='/my-profile' element = {<MyProfile/>}/>
+          <Route path='/logout' element = {<Logout/> }/>
         </Routes>
       </main>
     </div>
