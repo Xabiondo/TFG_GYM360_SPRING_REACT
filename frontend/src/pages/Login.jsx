@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import './Login.css'; // Importamos los nuevos estilos
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  // Añadimos estado para feedback visual en lugar de solo alerts (opcional, pero más moderno)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +22,8 @@ const Login = () => {
       alert("Pon una contraseña");
       return;
     }
+
+    setIsLoading(true); // Activamos estado de carga
 
     const usuarioData = {
       email: email,
@@ -35,28 +40,38 @@ const Login = () => {
       });
 
       const data = await response.json();
+      
       if (data.success) {
-        login(data); // <-- Actualiza el estado global
-        navigate('/inicio'); // <-- Redirige a la app
+        login(data);
+        navigate('/inicio');
       } else {
         alert('Error: ' + data.message);
       }
     } catch (error) {
       console.error('Error:', error);
       alert('No se pudo conectar con el servidor');
+    } finally {
+      setIsLoading(false); // Desactivamos carga
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Iniciar Sesión</h2>
+        {/* Pequeña marca arriba para dar contexto */}
+        <div style={{ textAlign: 'center', marginBottom: '1rem', opacity: 0.5, fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
+          Gym360 System
+        </div>
+        
+        <h2>BIENVENIDO</h2>
+        
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
+              placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -67,14 +82,22 @@ const Login = () => {
             <input
               type="password"
               id="password"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <button type="submit" className="auth-button">Iniciar Sesión</button>
+          
+          <button type="submit" className="auth-button" disabled={isLoading}>
+            {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
+          </button>
         </form>
-        <p>¿No tienes cuenta? <Link to="/register">Regístrate</Link></p>
+        
+        <p>
+          ¿No tienes cuenta? 
+          <Link to="/register">Regístrate</Link>
+        </p>
       </div>
     </div>
   );

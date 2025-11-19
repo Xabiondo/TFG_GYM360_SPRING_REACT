@@ -1,69 +1,105 @@
 import { useState } from "react";
-import ChatInput from "../components/ChatInput";
 import Navbar from "../components/Navbar";
-import "../pages/PersonalTrainer.css"; // Asegúrate de crear este archivo
+import "./PersonalTrainer.css"; 
 
 const PersonalTrainer = () => {
-
-  const[mensaje , setMensaje] = useState('')
-  const[respuestaEntrenador , setRespuestaEntrenador] = useState('')
+  const [mensaje, setMensaje] = useState('');
+  const [respuestaEntrenador, setRespuestaEntrenador] = useState('');
+  // Nuevo estado para saber si está cargando
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    setMensaje(e.target.value)
-
+    setMensaje(e.target.value);
   }
 
-  const handleSubmit = async(e) =>{
-    if(mensaje == ''){
-      alert("escribe algo")
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Buena práctica añadir esto si estuviera dentro de un form
+
+    if (mensaje.trim() === '') {
+      alert("Por favor, describe tu objetivo.");
       return;
     }
-    const prompt = JSON.stringify({
-      prompt: mensaje
-    })
 
-    try{
-      const response = await fetch("http://localhost:8080/api/personalTrainer/assesment" , {
-        headers:{
+    setIsLoading(true); // Activamos modo carga
+    setRespuestaEntrenador(''); // Limpiamos respuesta anterior
+
+    const promptBody = JSON.stringify({
+      prompt: mensaje
+    });
+
+    try {
+      const response = await fetch("http://localhost:8080/api/personalTrainer/assesment", {
+        headers: {
           "Content-Type": "application/json"
         },
         method: 'POST',
-        body: prompt
-      })
+        body: promptBody
+      });
+      
+      if (!response.ok) throw new Error('Error en la petición');
+      
       const data = await response.text();
-      setRespuestaEntrenador(data)
+      setRespuestaEntrenador(data);
 
-
-    }catch (error){
-      alert("algo has hecho mal")
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error al consultar al entrenador.");
+    } finally {
+      setIsLoading(false); // Desactivamos modo carga pase lo que pase
     }
   }
-  
+
   return (
     <div className="personal-trainer">
       <Navbar />
-      <div className="content">
-        <h1 className="ia-trainer">¿En qué puedo ayudarte hoy?</h1>
-        <label id="etiqueta"> Dime lo que quieres</label>
-        <input type="text" value={mensaje} onChange={handleInputChange}></input>
+      
+      <div className="pt-container">
+        <div className="pt-header">
+          <span className="ai-badge">AI POWERED</span>
+          <h1>Entrenador Virtual</h1>
+          <p>Diseña tu rutina, pregunta sobre nutrición o mejora tu técnica.</p>
+        </div>
 
+        <div className="input-area">
+          <label htmlFor="prompt" className="input-label">Tu consulta</label>
+          <textarea 
+            id="prompt"
+            className="pt-input"
+            value={mensaje} 
+            onChange={handleInputChange}
+            placeholder="Ej: Quiero una rutina de 3 días para hipertrofia..."
+            rows="4" 
+          />
 
-        <button type="submit" onClick={handleSubmit} >Voy a tener suerte</button>
+          <button 
+            className="pt-button" 
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Analizando...' : 'Generar Plan'}
+          </button>
+        </div>
 
-        {respuestaEntrenador && (
-          <div className="respuesta-ia">
-            <h3>Entrenador personal dice...</h3>
-            <pre>{respuestaEntrenador}</pre>
-
-
+        {/* Sección de respuesta con animación de aparición */}
+        {(respuestaEntrenador || isLoading) && (
+          <div className="response-area">
+            <div className="response-header">
+              <div className="dot-indicator"></div>
+              <h3>Respuesta del Sistema</h3>
             </div>
+            
+            <div className="response-content">
+              {isLoading ? (
+                <p className="loading-text">Procesando tu solicitud...</p>
+              ) : (
+                <pre>{respuestaEntrenador}</pre>
+              )}
+            </div>
+          </div>
         )}
-
-       
-
       </div>
     </div>
   );
 };
 
-export default PersonalTrainer; 
+export default PersonalTrainer;

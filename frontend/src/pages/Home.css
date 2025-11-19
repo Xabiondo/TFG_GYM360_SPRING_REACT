@@ -1,61 +1,131 @@
+/* Usamos las mismas variables visuales que en Ofertas para mantener consistencia */
+:root {
+  --bg-body: #000000;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --accent: #ffffff; /* Acento blanco para máximo contraste (estilo Nike/Apple) */
+}
+
 .home {
-  padding: 2rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* El mismo fondo "Stealth" que en Ofertas */
+  background-color: var(--bg-body);
+  background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 80%);
+  color: var(--text-main);
 }
 
 .home-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  flex: 1;
-  max-height: 400px;
+  gap: 4rem; /* Espacio generoso entre texto y foto */
+  padding: 2rem;
+  
+  /* ESTO ES IMPORTANTE: Mismo ancho que en Offers para que al navegar no se descuadre */
+  max-width: 1200px; 
+  width: 100%;
+  margin: 0 auto;
+  flex: 1; /* Para que ocupe la altura vertical disponible */
 }
 
+/* --- TEXTO --- */
 .home-text {
   flex: 1;
   max-width: 600px;
 }
 
-.home-text h1 {
-  font-size: 2.5rem;
+.main-title {
+  font-size: 4rem; /* Título gigante e impactante */
+  font-weight: 800;
+  line-height: 1;
   margin-bottom: 1rem;
-  color: #ffffff;
+  letter-spacing: -2px;
+  text-transform: uppercase;
 }
 
-.home-text p {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #cccccc;
+.text-highlight {
+  /* Efecto de texto hueco (outline) muy moderno */
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+  opacity: 0.8;
 }
 
+.subtitle {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted); /* Gris apagado igual que en las cards de ofertas */
+  margin-bottom: 2.5rem;
+  max-width: 90%;
+}
+
+/* --- BOTÓN (Igual que en Offers) --- */
+.home-btn {
+  background-color: var(--text-main);
+  color: black;
+  font-weight: 800;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #cccccc;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* --- FOTO --- */
 .home-photo {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .home-photo img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 500px;
   height: auto;
-  border-radius: 8px;
+  object-fit: cover;
+  border-radius: 12px;
+  /* Filtro para desaturar un poco la imagen y que pegue con el negro */
+  filter: grayscale(20%) contrast(1.1); 
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
   .home-container {
-    flex-direction: column;
+    flex-direction: column-reverse; /* En móvil, la foto arriba o abajo según prefieras */
+    text-align: center;
+    justify-content: center;
+    padding-top: 4rem;
   }
 
   .home-text {
     max-width: 100%;
-    text-align: center;
   }
 
-  .home-photo {
-    margin-top: 2rem;
+  .description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .main-title {
+    font-size: 3rem;
   }
 }
