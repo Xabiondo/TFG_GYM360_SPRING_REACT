@@ -1,6 +1,7 @@
 package com.gym360.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class Usuario {
     private String contrasena ;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<Oferta> ofertas;
 
     public Usuario(){}
