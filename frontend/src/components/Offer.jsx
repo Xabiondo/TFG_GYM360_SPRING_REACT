@@ -2,18 +2,28 @@ import React from 'react'
 import './offer.css'
 
 const Offer = ({ titulo, descripcion, precio, rutaFoto, popularidad }) => {
-  
 
   const imagenMostrar = rutaFoto || "https://via.placeholder.com/300x200?text=No+Image";
 
+    const aumentarPopularidad = () =>{
+      popularidad = popularidad  + 1 ;
+
+
+    }
+    const disminuirPopularidad = () =>{
+      popularidad = popularidad - 1;
+
+    }
+  
+  
   return (
     <div className="offer-card">
       
 
       <div className="offer-votes">
-        <button className="vote-btn">▲</button>
+        <button className="vote-btn" onClick={aumentarPopularidad()}>▲</button>
         <span className="vote-count">{popularidad || 0}</span>
-        <button className="vote-btn">▼</button>
+        <button className="vote-btn" onClick={disminuirPopularidad()}>▼</button>
       </div>
 
 

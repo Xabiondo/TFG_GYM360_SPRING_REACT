@@ -42,7 +42,6 @@ const Navbar = () => {
             Iniciar Sesión
           </Link>
         )}
-       
       </div>
     </nav>
   );

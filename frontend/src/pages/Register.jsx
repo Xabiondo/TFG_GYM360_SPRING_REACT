@@ -9,7 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // <-- Nuevo
+  const { login } = useAuth(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
