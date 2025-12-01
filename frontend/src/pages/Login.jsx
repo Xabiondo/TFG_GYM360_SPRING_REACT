@@ -23,7 +23,7 @@ const Login = () => {
       return;
     }
 
-    setIsLoading(true); // Activamos estado de carga
+    setIsLoading(true);
 
     const usuarioData = {
       email: email,
