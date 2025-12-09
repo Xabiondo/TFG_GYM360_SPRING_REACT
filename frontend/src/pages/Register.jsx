@@ -18,6 +18,10 @@ const Register = () => {
       alert("Las contraseñas no coinciden");
       return;
     }
+    if(nombre == null){
+      alert("pon un nombre "); 
+      return ;
+    }
 
     const usuarioData = {
       nombre: name,

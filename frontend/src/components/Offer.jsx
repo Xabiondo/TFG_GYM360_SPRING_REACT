@@ -3,7 +3,7 @@ import './offer.css'
 
 const Offer = ({id ,titulo, descripcion, precio, rutaFoto, popularidad }) => {
 
-
+  const {user } = useAuth() ; 
   const [voto , setVoto] = useState(popularidad)
   const [valorVoto , setValorVoto] = useState(false)
   const [yaVotado  , setYaVotado] = useState(false)
@@ -29,11 +29,25 @@ const Offer = ({id ,titulo, descripcion, precio, rutaFoto, popularidad }) => {
     const Popularidad = async (e) =>{
       e.preventDefault();
 
-      try{
-        const response = await fetch("http://localhost:8080/api/")
+      const datoVoto = {
+        ofertaId: Offer.id  , 
+        usuarioId: user.id
+
       }
 
+      try{
+        const response = await fetch("http://localhost:8080/api/" , {
+          method: 'POST' , 
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          bod
+        }
+      )}catch(error){
+      console
 
+
+    }
     }
   
 

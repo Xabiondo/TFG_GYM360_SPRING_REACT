@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import './Login.css'; // Importamos los nuevos estilos
+import './Login.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
-  // Añadimos estado para feedback visual en lugar de solo alerts (opcional, pero más moderno)
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -40,6 +39,7 @@ const Login = () => {
       });
 
       const data = await response.json();
+      console.log(data)
       
       if (data.success) {
         login(data);
@@ -51,14 +51,14 @@ const Login = () => {
       console.error('Error:', error);
       alert('No se pudo conectar con el servidor');
     } finally {
-      setIsLoading(false); // Desactivamos carga
+      setIsLoading(false); 
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        {/* Pequeña marca arriba para dar contexto */}
+
         <div style={{ textAlign: 'center', marginBottom: '1rem', opacity: 0.5, fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
           Gym360 System
         </div>

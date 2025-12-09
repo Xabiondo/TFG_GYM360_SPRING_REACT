@@ -24,6 +24,12 @@ public class OfertasController {
     @Autowired
     OfertaRepositorio ofertaRepositorio ;
 
+    @Autowired
+    VotoRepositorio votoRepositorio ;
+
+    @Autowired
+    UsuarioRepositorio usuarioRepositorio ;
+
 
 
     @GetMapping("/ofertas")
@@ -33,7 +39,7 @@ public class OfertasController {
 
     }
 
-    @PostMapping("/ofertas/popularidad/{id}")
+    /*@PostMapping("/ofertas/popularidad/{id}")
     public ResponseEntity<Boolean> cambiarPopularidad(@PathVariable int idOferta , @RequestBody int idUsuario , @RequestBody Boolean opinion){
 
         if (votoRepositorio.existsByUsuarioIdAndOfertaId(idUsuario , idOferta)){
@@ -46,7 +52,7 @@ public class OfertasController {
 
 
 
-    }
+    }*/
 
 
 }
