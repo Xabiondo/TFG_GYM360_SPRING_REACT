@@ -3,6 +3,7 @@ package com.gym360.backend.model;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
 
 
 @Entity

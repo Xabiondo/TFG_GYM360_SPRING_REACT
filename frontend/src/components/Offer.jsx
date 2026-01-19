@@ -1,69 +1,74 @@
 import React, { useState } from 'react'
 import './offer.css'
 
-const Offer = ({id ,titulo, descripcion, precio, rutaFoto, popularidad }) => {
+import { useAuth } from '../context/AuthContext';
 
-  const {user } = useAuth() ; 
-  const [voto , setVoto] = useState(popularidad)
-  const [valorVoto , setValorVoto] = useState(false)
-  const [yaVotado  , setYaVotado] = useState(false)
+const Offer = ({ id, titulo, descripcion, precio, rutaFoto, popularidad }) => {
+
+
+  const { user } = useAuth(); 
+
+  const [voto, setVoto] = useState(popularidad || 0); 
+  const [yaVotado, setYaVotado] = useState(false);
+  
   const imagenMostrar = rutaFoto || "https://via.placeholder.com/300x200?text=No+Image";
 
-    const aumentarPopularidad = () =>{
-      if(!yaVotado){
-        setVoto(voto + 1);
-        setValorVoto(true);
-        setYaVotado(true);
 
-      }
- 
+  const enviarVotoBackend = async (nuevoVoto) => {
+    if (!user) return; 
+
+    const datoVoto = {
+      ofertaId: id, 
+      usuarioId: user.id,
+      valor: nuevoVoto 
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/votar", { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datoVoto) 
+      });
+      
+      if (!response.ok) throw new Error("Error al votar");
+      
+    } catch (error) {
+      console.log("Error enviando voto:", error);
     }
-    const disminuirPopularidad = () =>{
-      if(!yaVotado){
-        setVoto(voto - 1);
-        setValorVoto(false);
-        setYaVotado(true);
-      }
- 
+  };
+
+  const aumentarPopularidad = () => {
+    if (!yaVotado) {
+      const nuevoValor = voto + 1;
+      setVoto(nuevoValor);
+      setYaVotado(true);
+      enviarVotoBackend(nuevoValor); 
     }
-    const Popularidad = async (e) =>{
-      e.preventDefault();
+  };
 
-      const datoVoto = {
-        ofertaId: Offer.id  , 
-        usuarioId: user.id
-
-      }
-
-      try{
-        const response = await fetch("http://localhost:8080/api/" , {
-          method: 'POST' , 
-          headers:{
-            'Content-Type': 'application/json'
-          },
-          bod
-        }
-      )}catch(error){
-      console
-
-
+  const disminuirPopularidad = () => {
+    if (!yaVotado) {
+      const nuevoValor = voto - 1;
+      setVoto(nuevoValor);
+      setYaVotado(true);
+      enviarVotoBackend(nuevoValor); 
     }
-    }
-  
+  };
 
   return (
     <div className="offer-card">
       
-
       <div className="offer-votes">
         <button className="vote-btn" onClick={aumentarPopularidad}>▲</button>
-        <span className="vote-count">{voto || 0}</span>
+        <span className="vote-count">{voto}</span>
         <button className="vote-btn" onClick={disminuirPopularidad}>▼</button>
       </div>
 
-
       <div className="offer-content">
-        <h3>{id}  {titulo}</h3>
+
+        <h3>{titulo}</h3> 
         <p className="offer-description">{descripcion}</p>
         
         <div className="offer-footer">
@@ -72,9 +77,9 @@ const Offer = ({id ,titulo, descripcion, precio, rutaFoto, popularidad }) => {
         </div>
       </div>
 
-
       <div className="offer-image-container">
-        <img src="./assets/doctor.png" />
+
+        <img src={imagenMostrar} alt={titulo} /> 
       </div>
 
     </div>

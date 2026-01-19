@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 const Offers = () => {
   const [offers, setOffers] = useState([]);
 
-
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -32,7 +31,6 @@ const Offers = () => {
     }
     fetchOffers();
   }, [])
-
 
   return (
     <div className="page-wrapper">

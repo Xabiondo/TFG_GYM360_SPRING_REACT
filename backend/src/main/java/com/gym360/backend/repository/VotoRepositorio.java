@@ -16,4 +16,6 @@ public interface VotoRepositorio extends JpaRepository<Voto, Long> {
 
 
 
+
+
 }
