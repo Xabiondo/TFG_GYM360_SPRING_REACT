@@ -39,7 +39,7 @@ const MyProfile = () => {
   return (
     <div className="page-wrapper">
       <Navbar />
-      
+
       <div className="offers-container">
         <header className="offers-header">
           <h1>MI <span className="text-gradient">PERFIL</span></h1>
@@ -48,18 +48,18 @@ const MyProfile = () => {
 
         {/* Usamos una clase específica para distribuir el perfil (Grid 1/3 - 2/3) */}
         <div className="profile-grid">
-          
+
           {/* --- TARJETA DE USUARIO --- */}
           <div className="profile-card">
             <div className="profile-header">
               <div className="avatar-circle">{inicial}</div>
               <span className="user-role">Miembro Gym360</span>
             </div>
-            
+
             <div className="profile-info">
               <h2>{usuario.nombre}</h2>
               <p className="user-email">{usuario.email}</p>
-              
+
               <div className="stats-row">
                 <div className="stat">
                   <span className="stat-val">0</span>
@@ -82,7 +82,7 @@ const MyProfile = () => {
               <span className="badge-info">Mensual</span>
             </div>
             <div className="calendar-wrapper">
-               <GymCalendar />
+              <GymCalendar />
             </div>
           </div>
 
