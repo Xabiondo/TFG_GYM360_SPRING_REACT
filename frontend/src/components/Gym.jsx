@@ -1,13 +1,14 @@
 import React from 'react';
-// No importamos './Gym.css' aquí si ya lo importamos en el padre, 
-// pero si prefieres mantenerlo modular, déjalo.
+import { useNavigate } from 'react-router-dom'; // IMPORTANTE AÑADIR ESTO
+import './Gym.css'; 
 
 const Gym = ({ id, nombre, precio, localizacion, notaMedia, imagen }) => {
+    const navigate = useNavigate(); // Inicializamos el hook
+
     return (
         <div className="gym-card">
-            <div className="gym-image-wrapper">
+            <div className="gym-image-wrapper" style={{ flex: '0 0 35%' }}>
                 <img src={imagen} alt={nombre} />
-                {/* Etiqueta flotante sobre la imagen */}
                 <div className="location-badge">{localizacion}</div>
             </div>
             
@@ -29,10 +30,14 @@ const Gym = ({ id, nombre, precio, localizacion, notaMedia, imagen }) => {
                 </div>
 
                 <div className="gym-actions">
-                    <button className="gym-btn">Ver Detalles</button>
+                    {/* Añadimos el evento onClick para ir a la nueva página pasándole el ID */}
+                    <button className="gym-btn" onClick={() => navigate(`/gym/${id}`)}>
+                        Ver Detalles
+                    </button>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
 export default Gym;

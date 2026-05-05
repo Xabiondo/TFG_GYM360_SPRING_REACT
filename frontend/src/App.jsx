@@ -8,9 +8,11 @@ import PersonalTrainer from './pages/PersonalTrainer'
 import Register from './pages/Register'
 import MyProfile from './pages/MyProfile'
 
+
 import { Logout } from './pages/Logout'
 import ProtectedRoute from './utils/ProtectedRoute'
 import Progreso from './pages/Progreso'
+import GymDetails from './pages/GymDetails'
 
 
 
@@ -33,6 +35,7 @@ function App() {
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/progreso"  element={<Progreso/>}           />
+            <Route path="/gym/:id" element={<GymDetails />} />
           </Route>
 
           {/* En caso de que se equivoque, volver a la normal*/}

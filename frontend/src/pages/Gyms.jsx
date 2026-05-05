@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import Gym from '../components/Gym';
+import Gym from '../components/Gym'; // Asegúrate de que la ruta es correcta
 
 const Gyms = () => {
   const gimnasios = [
@@ -11,17 +11,17 @@ const Gyms = () => {
   ];
 
   return (
-    <div className="page-wrapper">
+    <div className="gyms-page">
       <Navbar />
       
-      <div className="offers-container">
-        <header className="offers-header">
+      <div className="gyms-container">
+        <header className="gyms-header">
+          <span className="gyms-badge">Selección</span>
           <h1>GIMNASIOS <span className="text-gradient">TOP</span></h1>
           <p>Explora las mejores instalaciones en tu área.</p>
         </header>
 
-        {/* Usamos grid-layout que definimos en App.css */}
-        <div className="grid-layout">
+        <div className="gym-list">
           {gimnasios.map(gym => (
             <Gym key={gym.id} {...gym} />
           ))}
