@@ -25,21 +25,14 @@ import java.util.Optional;
 
 public class OfertasController {
 
-
-
     @Autowired
     VotoService votoService ;
-
-
-
-
 
     //Obtener las ofertas
     @GetMapping("/ofertas")
     public ResponseEntity<List<Oferta>> darOfertas(){
 
         return ResponseEntity.ok(votoService.obtenerOfertas());
-
     }
 
     //

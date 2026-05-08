@@ -1,37 +1,39 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // IMPORTANTE AÑADIR ESTO
+import { useNavigate } from 'react-router-dom'; 
 import './Gym.css'; 
 
-const Gym = ({ id, nombre, precio, localizacion, notaMedia, imagen }) => {
-    const navigate = useNavigate(); // Inicializamos el hook
-
+const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, abiertoAhora, fotoReferencia }) => {
+    const navigate = useNavigate(); 
     return (
         <div className="gym-card">
             <div className="gym-image-wrapper" style={{ flex: '0 0 35%' }}>
-                <img src={imagen} alt={nombre} />
-                <div className="location-badge">{localizacion}</div>
+                <img src={imagenUrl} alt={nombre} />
+                {/* Etiqueta de abierto/cerrado dinámica */}
+                <div className={`status-badge ${abiertoAhora ? 'open' : 'closed'}`}>
+                    {abiertoAhora ? '🟢 Abierto' : '🔴 Cerrado'}
+                </div>
             </div>
             
             <div className="gym-content">
                 <div className="gym-header-row">
                     <h2>{nombre}</h2>
                     <div className="rating-badge">
-                        <span>★</span> {notaMedia}/10
+                        <span>★</span> {puntuacion ? puntuacion.toFixed(1) : 'S/N'}/5 
+                        <span className="reviews-count"> ({totalResenas || 0})</span>
                     </div>
                 </div>
 
                 <div className="gym-details">
-                    <p className="gym-price">
-                        {precio}€ <span className="period">/mes</span>
+                    <p className="gym-address">
+                        📍 {direccion}
                     </p>
                     <p className="gym-description">
-                        Acceso completo a sala de musculación y clases colectivas.
+                        Instalación deportiva registrada. Haz clic para ver horarios, fotos extra y ubicación en el mapa.
                     </p>
                 </div>
 
                 <div className="gym-actions">
-                    {/* Añadimos el evento onClick para ir a la nueva página pasándole el ID */}
-                    <button className="gym-btn" onClick={() => navigate(`/gym/${id}`)}>
+                    <button className="gym-btn" onClick={() => navigate(`/gym/${placeId}`)}>
                         Ver Detalles
                     </button>
                 </div>

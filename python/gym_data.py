@@ -2,9 +2,8 @@ import requests
 import mysql.connector
 import time
 
+API_KEY = 'another day será'
 
-API_KEY = 'jajaj casi , otro día será'
-#La api la podría dejar, ya que la he restringido a que solo se pueda usar desde mi ip, pero por si acaso la quito
 DB_CONFIG = {
     'host': 'localhost',
     'port': 3308,
@@ -13,7 +12,19 @@ DB_CONFIG = {
     'database': 'tfg_xabi'
 }
 
-QUERIES = ['gimnasios en Navarra', 'polideportivos en Navarra']
+# 1. ESTRATEGIA: Lista de principales municipios de Navarra
+# Cuantos más pueblos añadas, más exhaustiva será la búsqueda
+MUNICIPIOS = [
+    'Pamplona', 'Tudela', 'Barañáin', 'Burlada', 'Estella', 
+    'Zizur Mayor', 'Tafalla', 'Ansoáin', 'Villava', 'Corella', 
+    'Noáin', 'Cintruénigo', 'Alsasua', 'Valle de Egüés', 'Berriozar',
+    'Aranguren', 'Bera', 'San Adrián', 'Lodosa', 'Castejón' , 'Lerín'
+]
+
+TIPOS = ['gimnasios', 'polideportivos']
+
+# Generamos las queries combinando tipo y municipio
+QUERIES = [f"{tipo} en {municipio}, Navarra" for municipio in MUNICIPIOS for tipo in TIPOS]
 
 
 def setup_database():
@@ -28,9 +39,8 @@ def setup_database():
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")
         cursor.execute(f"USE {DB_CONFIG['database']}")
         
-
         cursor.execute('''
-            CREATE TABLE IF NOT EXISTS lugares (
+            CREATE TABLE IF NOT EXISTS gimnasios (
                 place_id VARCHAR(100) PRIMARY KEY,
                 nombre VARCHAR(255),
                 direccion VARCHAR(255),
@@ -54,6 +64,8 @@ def setup_database():
 def buscar_y_guardar(query, connection):
     cursor = connection.cursor()
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+    
+    # Parámetros iniciales
     params = {
         'query': query,
         'key': API_KEY
@@ -63,27 +75,25 @@ def buscar_y_guardar(query, connection):
     paginas_maximas = 3 
     
     for i in range(paginas_maximas):
-        print(f"Solicitando página {i+1} para: {query}...")
+        print(f"Solicitando página {i+1} para: '{query}'...")
         response = requests.get(url, params=params).json()
+        
+        # Verificar si la API devolvió un error (muy útil para depurar)
+        if response.get('status') != 'OK' and response.get('status') != 'ZERO_RESULTS':
+            print(f"⚠️ Atención: Estado de la API: {response.get('status')}")
+            
         resultados = response.get('results', [])
         
         for item in resultados:
-
             lat = item.get('geometry', {}).get('location', {}).get('lat')
             lng = item.get('geometry', {}).get('location', {}).get('lng')
-            
-
             abierto_ahora = item.get('opening_hours', {}).get('open_now')
+            tipos_str = ", ".join(item.get('types', []))
             
-
-            tipos = ", ".join(item.get('types', []))
-            
-
             fotos = item.get('photos', [])
             foto_ref = fotos[0].get('photo_reference') if fotos else None
             
-
-            sql = """INSERT IGNORE INTO lugares 
+            sql = """INSERT IGNORE INTO gimnasios 
                      (place_id, nombre, direccion, latitud, longitud, estado_negocio, 
                      abierto_ahora, puntuacion, total_reseñas, tipos, foto_referencia, categoria_busqueda) 
                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
@@ -98,9 +108,9 @@ def buscar_y_guardar(query, connection):
                 abierto_ahora,
                 item.get('rating', 0),
                 item.get('user_ratings_total', 0),
-                tipos,
+                tipos_str,
                 foto_ref,
-                query.split(' ')[0] 
+                query.split(' ')[0] # Extrae "gimnasios" o "polideportivos"
             )
             
             cursor.execute(sql, valores)
@@ -108,21 +118,25 @@ def buscar_y_guardar(query, connection):
             
         connection.commit()
         
-
+        # Gestionar la paginación
         next_token = response.get('next_page_token')
         if not next_token:
-            break
+            break # Si no hay más páginas, salimos del bucle
         
-        time.sleep(2) 
+        # CRÍTICO: Google necesita tiempo para validar el token. 2s suele ser poco.
+        print("Esperando 4 segundos para activar el next_page_token...")
+        time.sleep(4) 
+        
+        # En las siguientes peticiones SOLO se envía el token y la API key
         params = {'pagetoken': next_token, 'key': API_KEY}
 
-    print(f"Finalizado: {total_obtenidos} registros procesados para '{query}'.")
+    print(f"Finalizado: {total_obtenidos} registros procesados para '{query}'.\n")
 
 
 if __name__ == "__main__":
     db_conn = setup_database()
     
-    print("Iniciando volcado masivo de datos en MySQL...")
+    print(f"Iniciando volcado masivo... Se ejecutarán {len(QUERIES)} búsquedas.")
     for q in QUERIES:
         buscar_y_guardar(q, db_conn)
         
