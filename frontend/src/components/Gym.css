@@ -1,80 +1,12 @@
-/* --- CONFIGURACIÓN GENERAL DE LA PÁGINA --- */
-:root {
-  --bg-body: #000000;
-  --bg-card: #0a0a0a;
-  --border: #222222;
-  --accent: #ffffff;
-  --text-main: #ffffff;
-  --text-muted: #888888;
-  --rating-color: #fbbf24; /* Amarillo estrella */
-}
-
-.gyms-page {
-  min-height: 100vh;
-  background-color: var(--bg-body);
-  background-image: radial-gradient(circle at 50% 0%, #1c1c1c 0%, #000000 80%);
-  color: var(--text-main);
-  padding-bottom: 4rem;
-}
-
-.gyms-container {
-  max-width: 1000px; /* Contenedor centralizado */
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-/* --- HEADER --- */
-.gyms-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  margin-top: 2rem;
-}
-
-.gyms-badge {
-  color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: 1px solid #333;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-}
-
-.gyms-header h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.text-gradient {
-  background: linear-gradient(to right, #fff, #666);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gyms-header p {
-  color: var(--text-muted);
-}
-
-/* --- LISTA DE GIMNASIOS (GRID) --- */
-.gym-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px; /* Espacio entre tarjetas */
-}
-
-/* --- TARJETA INDIVIDUAL (Horizontal Layout) --- */
+/* --- TARJETA INDIVIDUAL --- */
 .gym-card {
   display: flex;
   background-color: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  overflow: hidden; /* Para que la imagen no se salga de las esquinas */
+  overflow: hidden;
   transition: all 0.3s ease;
-  height: 220px; /* Altura fija para uniformidad */
+  height: 220px;
 }
 
 .gym-card:hover {
@@ -83,9 +15,8 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- IMAGEN --- */
 .gym-image-wrapper {
-  width: 35%; /* La imagen ocupa el 35% del ancho */
+  width: 35%;
   position: relative;
   overflow: hidden;
 }
@@ -97,12 +28,10 @@
   transition: transform 0.5s ease;
 }
 
-/* Zoom suave en la imagen al hacer hover en la tarjeta */
 .gym-card:hover .gym-image-wrapper img {
   transform: scale(1.05);
 }
 
-/* Etiqueta de localización sobre la foto */
 .location-badge {
   position: absolute;
   top: 12px;
@@ -119,7 +48,7 @@
 
 /* --- CONTENIDO --- */
 .gym-content {
-  flex: 1; /* Ocupa el resto del espacio */
+  flex: 1;
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -178,7 +107,7 @@
 
 /* --- BOTÓN --- */
 .gym-actions {
-  margin-top: auto; /* Empuja el botón hacia abajo */
+  margin-top: auto;
 }
 
 .gym-btn {
@@ -201,23 +130,3 @@
   box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
 
-/* --- RESPONSIVE (Móvil) --- */
-@media (max-width: 768px) {
-  .gym-card {
-    flex-direction: column; /* En móvil pasamos a vertical */
-    height: auto; /* Altura automática */
-  }
-
-  .gym-image-wrapper {
-    width: 100%;
-    height: 200px; /* Altura fija para la imagen en móvil */
-  }
-
-  .gym-content {
-    padding: 1.5rem;
-  }
-
-  .gym-btn {
-    width: 100%; /* Botón ancho completo en móvil */
-  }
-}

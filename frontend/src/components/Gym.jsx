@@ -2,13 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Gym.css'; 
 
+
+
 const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, abiertoAhora, fotoReferencia }) => {
     const navigate = useNavigate(); 
     return (
         <div className="gym-card">
             <div className="gym-image-wrapper" style={{ flex: '0 0 35%' }}>
-                <img src={imagenUrl} alt={nombre} />
-                {/* Etiqueta de abierto/cerrado dinámica */}
+                <img src={fotoReferencia} alt={nombre} />
+
                 <div className={`status-badge ${abiertoAhora ? 'open' : 'closed'}`}>
                     {abiertoAhora ? '🟢 Abierto' : '🔴 Cerrado'}
                 </div>

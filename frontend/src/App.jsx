@@ -21,14 +21,13 @@ function App() {
     <div className="app">
       <main className="main-content">
         <Routes>
-          {/* Estas son las rutas que siempre se pueden ver, esté o no logeado el usuario */}
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path='/' element={<Home/>} />
 
-          {/* Estas rutas requieren estar logeado */}
+
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
             <Route path="/gym" element={<Gyms />} />
             <Route path="/offers" element={<Offers />} />
             <Route path="/personal-trainer" element={<PersonalTrainer />} />
@@ -38,7 +37,6 @@ function App() {
             <Route path="/gym/:id" element={<GymDetails />} />
           </Route>
 
-          {/* En caso de que se equivoque, volver a la normal*/}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

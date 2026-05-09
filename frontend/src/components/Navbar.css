@@ -1,16 +1,27 @@
-.navbar {
+
+.navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 9999; 
+  width: 100%;
+  display: flex;
+  justify-content: center; 
+}
+
+
+.navbar-content {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a1a1a ;
+  background-color: black; 
   color: #fff;
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
 
-  border-bottom: white 0.5px solid;
+
 }
+
 
 .navbar-left .logo {
   font-size: 1.5rem;
@@ -60,28 +71,4 @@
 
 .navbar-right img:hover {
   transform: scale(1.1);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 1rem;
-  }
-
-  .navbar-center .nav-links li {
-    margin-right: 1rem;
-  }
-
-  .navbar-center .nav-links a {
-    font-size: 0.9rem;
-  }
-}
-/* Estilo para el Navbar */
-nav, .navbar {
-  background-color: rgba(0, 0, 0, 0.6); /* Semitransparente */
-  backdrop-filter: blur(10px); /* Efecto cristal borroso */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Siempre por encima */
 }

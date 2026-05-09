@@ -4,8 +4,10 @@ import './Home.css'
 
 const Home = () => {
   return (
+    <>
+          <Navbar />
     <div className="home">
-      <Navbar />
+
       
       <div className="home-container">
         <div className="home-text">
@@ -30,6 +32,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

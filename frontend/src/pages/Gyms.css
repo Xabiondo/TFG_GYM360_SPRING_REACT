@@ -1,0 +1,41 @@
+
+.gyms-page {
+  padding-bottom: 40px;
+}
+
+
+.gyms-container {
+  max-width: 800px; 
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* --- CABECERA --- */
+.gyms-header {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+
+
+/* El título principal */
+.gyms-header h1 {
+  color: var(--);
+  font-size: 40px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+/* El subtítulo */
+.gyms-header p {
+  color: #cccccc;
+  font-size: 18px;
+}
+
+/* --- LISTA DE GIMNASIOS (Contenedor) --- */
+.gym-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Separación entre tarjetas de gimnasios */
+}

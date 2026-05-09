@@ -1,104 +1,93 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { getAssessment } from "../services/personalTrainerService"; 
 import "./PersonalTrainer.css"; 
 
 const PersonalTrainer = () => {
+  // 1. Nuestros estados (las variables donde guardamos datos)
   const [mensaje, setMensaje] = useState('');
   const [respuestaEntrenador, setRespuestaEntrenador] = useState('');
-  // Nuevo estado para saber si está cargando
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // <-- ¡Faltaba esto!
 
+  // 2. Función para cuando escribes en la caja de texto
   const handleInputChange = (e) => {
     setMensaje(e.target.value);
   }
 
+  // 3. Función para el botón de Enviar
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Buena práctica añadir esto si estuviera dentro de un form
+    e.preventDefault(); 
 
     if (mensaje.trim() === '') {
-      alert("Por favor, describe tu objetivo.");
-      return;
+      alert("Por favor, escribe algo.");
+      return; 
     }
 
-    setIsLoading(true); // Activamos modo carga
-    setRespuestaEntrenador(''); // Limpiamos respuesta anterior
-
-    const promptBody = JSON.stringify({
-      prompt: mensaje
-    });
+    // Encendemos el modo "Cargando" y limpiamos respuestas viejas
+    setIsLoading(true); 
+    setRespuestaEntrenador(''); 
 
     try {
-      const response = await fetch("http://localhost:8080/api/personalTrainer/assesment", {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: 'POST',
-        body: promptBody
-      });
-      
-      if (!response.ok) throw new Error('Error en la petición');
-      
-      const data = await response.text();
-      setRespuestaEntrenador(data);
-
+      // Llamamos al archivo del Service
+      const datos = await getAssessment(mensaje);
+      setRespuestaEntrenador(datos);
     } catch (error) {
       console.error(error);
       alert("Hubo un error al consultar al entrenador.");
     } finally {
-      setIsLoading(false); // Desactivamos modo carga pase lo que pase
+      // Apagamos el modo "Cargando" cuando termine (falle o acierte)
+      setIsLoading(false); 
     }
   }
 
   return (
-    <div className="personal-trainer">
+    <>
       <Navbar />
-      
-      <div className="pt-container">
-        <div className="pt-header">
-          <span className="ai-badge">AI POWERED</span>
-          <h1>Entrenador Virtual</h1>
-          <p>Diseña tu rutina, pregunta sobre nutrición o mejora tu técnica.</p>
-        </div>
+      <div className="personal-trainer">
+        <div className="pt-container">
+          <div className="pt-header">
 
-        <div className="input-area">
-          <label htmlFor="prompt" className="input-label">Tu consulta</label>
-          <textarea 
-            id="prompt"
-            className="pt-input"
-            value={mensaje} 
-            onChange={handleInputChange}
-            placeholder="Ej: Quiero una rutina de 3 días para hipertrofia..."
-            rows="4" 
-          />
-
-          <button 
-            className="pt-button" 
-            onClick={handleSubmit}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Analizando...' : 'Generar Plan'}
-          </button>
-        </div>
-
-        {/* Sección de respuesta con animación de aparición */}
-        {(respuestaEntrenador || isLoading) && (
-          <div className="response-area">
-            <div className="response-header">
-              <div className="dot-indicator"></div>
-              <h3>Respuesta del Sistema</h3>
-            </div>
-            
-            <div className="response-content">
-              {isLoading ? (
-                <p className="loading-text">Procesando tu solicitud...</p>
-              ) : (
-                <pre>{respuestaEntrenador}</pre>
-              )}
-            </div>
+            <h1>Entrenador Virtual</h1>
+            <p>Diseña tu rutina, pregunta sobre nutrición o mejora tu técnica.</p>
           </div>
-        )}
+
+          <div className="input-area">
+            <label htmlFor="prompt" className="input-label">Tu consulta</label>
+            <textarea 
+              id="prompt"
+              className="pt-input"
+              value={mensaje} 
+              onChange={handleInputChange} 
+              placeholder="Ej: Quiero una rutina de 3 días para hipertrofia..."
+              rows="4" 
+            />
+
+            <button 
+              className="pt-button" 
+              onClick={handleSubmit} 
+              disabled={isLoading} 
+            >
+              {isLoading ? 'Analizando...' : 'Generar Plan'}
+            </button>
+          </div>
+          {(respuestaEntrenador !== '' || isLoading) && (
+            <div className="response-area">
+              <div className="response-header">
+                <h3>Respuesta del Sistema</h3>
+              </div>
+              
+              <div className="response-content">
+                {isLoading ? (
+                  <p className="loading-text">Procesando tu solicitud...</p>
+                ) : (
+                  <pre>{respuestaEntrenador}</pre>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

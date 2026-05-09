@@ -1,4 +1,4 @@
-package com.gym360.backend.controller;
+/*package com.gym360.backend.controller;
 
 
 import com.gym360.backend.model.Gimnasio;
@@ -23,5 +23,8 @@ public class GimnasioController {
         return ResponseEntity.ok(gimnasioService.obtenerGimnasios());
     }
 
-    
-}
+
+}*/
+
+
+
