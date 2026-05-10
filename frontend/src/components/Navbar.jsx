@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+  const fotoUrl = user?.fotoPerfil 
+    ? `http://localhost:8080/images/user/${user.fotoPerfil}` 
+    : './assets/doctor.png';
+
   return (
     <header className="navbar-wrapper">
       <nav className="navbar-content">
@@ -24,7 +30,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-right">
           <Link to="/my-profile">
-            <img src='./assets/doctor.png' alt="Usuario" width={40} />
+            <img src={fotoUrl} alt="Usuario" width={40} />
           </Link>
         </div>
 

@@ -21,8 +21,7 @@ public class Usuario {
 
     @Column(name = "foto_perfil")
     private String fotoPerfil;
-
-
+    
     private String contrasena ;
 
     @OneToMany(mappedBy = "usuario")
