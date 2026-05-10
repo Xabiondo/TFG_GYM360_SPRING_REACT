@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import GymCalendar from "../components/GymCalendar";
+
 // Asegúrate de que GymCalendar acepte estilos o se adapte al contenedor
 
 const MyProfile = () => {
@@ -75,16 +75,7 @@ const MyProfile = () => {
             <button className="action-btn secondary-btn">Editar Perfil</button>
           </div>
 
-          {/* --- SECCIÓN CALENDARIO --- */}
-          <div className="calendar-container-card">
-            <div className="card-header-row">
-              <h3>Tu Actividad</h3>
-              <span className="badge-info">Mensual</span>
-            </div>
-            <div className="calendar-wrapper">
-              <GymCalendar />
-            </div>
-          </div>
+
 
         </div>
       </div>

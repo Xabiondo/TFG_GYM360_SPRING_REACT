@@ -1,7 +1,6 @@
 
 .personal-trainer {
   min-height: 100vh;
-  background-color: #0f1115; 
   color: #f1f1f1;
   font-family: system-ui, -apple-system, sans-serif;
   padding-bottom: 4rem;
@@ -61,12 +60,9 @@
 }
 
 
-.pt-input:focus {
-  border-color: #22c55e; 
-}
-
 .pt-button {
-  background-color: ;
+  background-color: var(--acent);
+
   color: #000;
   font-weight: bold;
   font-size: 1rem;
@@ -78,9 +74,6 @@
   transition: background-color 0.2s;
 }
 
-.pt-button:hover:not(:disabled) {
-  background-color: #16a34a; /* Verde más oscuro al pasar el ratón */
-}
 
 .pt-button:disabled {
   background-color: #3f3f46;
@@ -88,7 +81,7 @@
   cursor: not-allowed;
 }
 
-/* --- ÁREA DE RESPUESTA --- */
+
 .response-area {
   margin-top: 2rem;
   background-color: #181a20;
@@ -97,13 +90,7 @@
   padding: 1.5rem;
 }
 
-.response-header h3 {
-  color: #22c55e;
-  margin: 0 0 1rem 0;
-  font-size: 1.1rem;
-  border-bottom: 1px solid #272a30;
-  padding-bottom: 0.8rem;
-}
+
 
 .response-content {
   color: #d4d4d8;

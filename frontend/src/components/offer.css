@@ -95,7 +95,6 @@
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    transition: background 0.2s;
 }
 
 .offer-button:hover {

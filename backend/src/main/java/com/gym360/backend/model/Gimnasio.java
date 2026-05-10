@@ -48,11 +48,15 @@ public class Gimnasio {
     @Column(name = "categoria_busqueda", length = 50)
     private String categoriaBusqueda;
 
+    @Column(name = "precio")
+    private Double precio;
+
 
     public Gimnasio() {
     }
 
-    public Gimnasio(String placeId, String nombre, String direccion, Double latitud, Double longitud, String estadoNegocio, Boolean abiertoAhora, Float puntuacion, Integer totalResenas, String tipos, String fotoReferencia, String categoriaBusqueda) {
+    public Gimnasio(String placeId, String nombre, String direccion, Double latitud, Double longitud, String estadoNegocio, Boolean abiertoAhora, Float puntuacion, Integer totalResenas,
+                    String tipos, String fotoReferencia, String categoriaBusqueda , Double precio) {
         this.placeId = placeId;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -65,6 +69,7 @@ public class Gimnasio {
         this.tipos = tipos;
         this.fotoReferencia = fotoReferencia;
         this.categoriaBusqueda = categoriaBusqueda;
+        this.precio = precio ;
     }
 
 
@@ -105,4 +110,12 @@ public class Gimnasio {
 
     public String getCategoriaBusqueda() { return categoriaBusqueda; }
     public void setCategoriaBusqueda(String categoriaBusqueda) { this.categoriaBusqueda = categoriaBusqueda; }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
 }
