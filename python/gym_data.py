@@ -12,8 +12,7 @@ DB_CONFIG = {
     'database': 'tfg_xabi'
 }
 
-# 1. ESTRATEGIA: Lista de principales municipios de Navarra
-# Cuantos más pueblos añadas, más exhaustiva será la búsqueda
+
 MUNICIPIOS = [
     'Pamplona', 'Tudela', 'Barañáin', 'Burlada', 'Estella', 
     'Zizur Mayor', 'Tafalla', 'Ansoáin', 'Villava', 'Corella', 
@@ -23,7 +22,6 @@ MUNICIPIOS = [
 
 TIPOS = ['gimnasios', 'polideportivos']
 
-# Generamos las queries combinando tipo y municipio
 QUERIES = [f"{tipo} en {municipio}, Navarra" for municipio in MUNICIPIOS for tipo in TIPOS]
 
 

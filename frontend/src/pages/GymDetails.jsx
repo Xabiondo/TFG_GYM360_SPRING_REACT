@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { obtenerGimnasioDetalle, getImagenUrl } from '../services/gymDetailsService';
+import { obtenerGimnasioDetalle, obtenerGimnasioInfoExtra, getImagenUrl } from '../services/gymDetailsService';
 import './GymDetails.css';
 
 const GymDetails = () => {
@@ -10,9 +10,10 @@ const GymDetails = () => {
     const [gym, setGym] = useState(null);
     const [cargando, setCargando] = useState(true);
     
-    // Estado para el nuevo comentario
     const [nuevoComentario, setNuevoComentario] = useState("");
-    const user = JSON.parse(localStorage.getItem("user")); // Pillar usuario logueado
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    
 
     useEffect(() => {
         fetchGym();
@@ -20,10 +21,20 @@ const GymDetails = () => {
 
     const fetchGym = async () => {
         try {
-            const data = await obtenerGimnasioDetalle(id);
-            setGym(data);
+            // 1. Pedimos los datos básicos
+            const dataBase = await obtenerGimnasioDetalle(id);
+            
+            // 2. Pedimos la información extra (puede venir null si no existe)
+            const infoExtra = await obtenerGimnasioInfoExtra(id);
+            
+            // 3. Juntamos todo en un solo objeto. 
+            // Si infoExtra es null, usamos un objeto vacío {} para que no falle.
+            const gimnasioCompleto = { ...dataBase, ...(infoExtra || {}) };
+            
+            setGym(gimnasioCompleto);
+            console.log("Datos fusionados de este gym:", gimnasioCompleto);
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error al cargar el gimnasio:", error);
         } finally {
             setCargando(false);
         }
@@ -32,8 +43,6 @@ const GymDetails = () => {
     const handleEnviarComentario = async () => {
         if (!nuevoComentario.trim()) return;
 
-        // Aquí llamarías a tu servicio: postComentario(id, user.id, nuevoComentario)
-        // Por ahora, lo añadimos localmente para que lo veas:
         const comentarioMock = {
             usuarioNombre: user.nombre,
             texto: nuevoComentario,
@@ -71,12 +80,47 @@ const GymDetails = () => {
                 </div>
 
                 <div className="details-grid">
-                    {/* INFO IZQUIERDA */}
+                    {/* INFO IZQUIERDA - AHORA CON LOS DATOS EXTRAS */}
                     <div className="details-card">
                         <h2>Información</h2>
-                        <p className="gym-price">{gym.precio}€<span className="period">/mes</span></p>
-                        <p className="details-text">★ {gym.puntuacion?.toFixed(1)} / 5 ({gym.totalResenas} reseñas)</p>
-                        <button className="gym-btn" style={{width: '100%'}}>Inscribirse</button>
+                        
+                        {/* Precio */}
+                        {gym.precio != null && (
+                            <p className="gym-price">{gym.precio}€<span className="period">/mes</span></p>
+                        )}
+                        
+                        {/* Puntuación */}
+                        <p className="details-text" style={{marginBottom: '1.5rem'}}>
+                            ★ {gym.puntuacion?.toFixed(1)} / 5 ({gym.totalResenas} reseñas)
+                        </p>
+
+                        {/* Etiquetas de Tipo y Ambiente */}
+                        {(gym.tipo || gym.ambiente) && (
+                            <div style={{marginBottom: '1.5rem'}}>
+                                {gym.tipo && <span className="details-badge" style={{background: 'var(--accent)', color: 'black', marginRight: '10px'}}>{gym.tipo}</span>}
+                                {gym.ambiente && <span className="details-badge" style={{background: 'rgba(255,255,255,0.1)'}}>{gym.ambiente}</span>}
+                            </div>
+                        )}
+
+                        {/* Datos extra */}
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                            {gym.horario && (
+                                <p className="details-text"><strong>🕒 Horario:</strong> {gym.horario}</p>
+                            )}
+                            
+                            {gym.servicios && (
+                                <p className="details-text"><strong>🏋️ Servicios:</strong> {gym.servicios}</p>
+                            )}
+                            
+                            {gym.descripcion && (
+                                <div style={{marginTop: '10px'}}>
+                                    <strong style={{color: 'var(--text-main)'}}>📝 Descripción:</strong>
+                                    <p className="details-text" style={{marginTop: '5px', lineHeight: '1.6'}}>{gym.descripcion}</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <button className="gym-btn" style={{width: '100%', marginTop: '2rem'}}>Inscribirse</button>
                     </div>
 
                     {/* COMENTARIOS DERECHA */}
@@ -87,7 +131,10 @@ const GymDetails = () => {
                             {gym.comentarios?.length > 0 ? (
                                 gym.comentarios.map((c, i) => (
                                     <div key={i} className="comment-item">
-                                        <p className="comment-author">{c.usuarioNombre}</p>
+                                        <div className="comment-header">
+                                            <p className="comment-author">{c.usuarioNombre}</p>
+                                            {/* Opcional: mostrar fecha si la guardas */}
+                                        </div>
                                         <p className="comment-text">{c.texto}</p>
                                     </div>
                                 ))

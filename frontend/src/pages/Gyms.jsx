@@ -20,7 +20,7 @@ const Gyms = () => {
   useEffect(() => {
     const fetchGyms = async () => {
       try {
-        // Comprobamos si el usuario ha tocado algún filtro
+
         const hayFiltrosActivos =
           busqueda.trim() !== '' ||
           filtroAbierto !== 'todos' ||
@@ -29,7 +29,7 @@ const Gyms = () => {
 
         let gymsData;
 
-        // Si hay filtros, buscamos con condiciones. Si no, cargamos todos.
+
         if (hayFiltrosActivos) {
           const parametrosDeBusqueda = {
             busqueda,

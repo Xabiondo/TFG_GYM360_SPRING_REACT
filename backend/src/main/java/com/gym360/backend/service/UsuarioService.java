@@ -21,28 +21,27 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    // 1. Actualizar datos (Nombre y Foto)
     public Usuario actualizarUsuario(int id, Usuario datosNuevos) {
         Optional<Usuario> usuarioOpt = usuarioRepositorio.findById(id);
 
         if (usuarioOpt.isPresent()) {
             Usuario usuarioExistente = usuarioOpt.get();
 
-            // Actualizamos solo los datos permitidos
+
             if (datosNuevos.getNombre() != null) {
                 usuarioExistente.setNombre(datosNuevos.getNombre());
             }
             if (datosNuevos.getFotoPerfil() != null) {
                 usuarioExistente.setFotoPerfil(datosNuevos.getFotoPerfil());
             }
-            // NOTA: El email no lo actualizamos porque es "readOnly" en tu frontend
+
 
             return usuarioRepositorio.save(usuarioExistente);
         }
         throw new RuntimeException("Usuario no encontrado con ID: " + id);
     }
 
-    // 2. Guardar la foto físicamente en el disco
+
     public String guardarFotoPerfil(MultipartFile archivo) throws IOException {
 
         String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();

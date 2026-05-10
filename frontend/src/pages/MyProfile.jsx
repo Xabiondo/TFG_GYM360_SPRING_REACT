@@ -35,7 +35,7 @@ const MyProfile = () => {
         fotoNombre = res.nombreArchivo;
       }
 
-      // La lógica que te ha arreglado Claude
+
       await updateUser(user.id, { nombre, fotoPerfil: fotoNombre });
       login({ ...user, nombre, fotoPerfil: fotoNombre });
       

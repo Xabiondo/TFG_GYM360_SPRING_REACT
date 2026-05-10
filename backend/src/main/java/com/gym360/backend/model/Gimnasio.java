@@ -18,8 +18,6 @@ public class Gimnasio {
 
     @Column(name = "direccion", length = 255)
     private String direccion;
-
-
     @Column(name = "latitud")
     private Double latitud;
 

@@ -51,20 +51,5 @@ public class OfertasController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*@PostMapping("/ofertas/popularidad/{id}")
-    public ResponseEntity<Boolean> cambiarPopularidad(@PathVariable int idOferta , @RequestBody int idUsuario , @RequestBody Boolean opinion){
-
-        if (votoRepositorio.existsByUsuarioIdAndOfertaId(idUsuario , idOferta)){
-
-            return new ResponseEntity<>(false , HttpStatus.BAD_REQUEST);
-
-        }
-        Oferta oferta = ofertaRepositorio.getReferenceById(idOferta);
-        Usuario usuario = usuarioRepositorio.getReferenceById(idUsuario);
-
-
-
-    }*/
-
 
 }
