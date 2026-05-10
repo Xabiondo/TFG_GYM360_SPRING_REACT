@@ -4,7 +4,7 @@ import './Gym.css';
 
 
 
-const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, abiertoAhora, fotoReferencia }) => {
+const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, fotoReferencia }) => {
     const navigate = useNavigate();
 
     const API_BASE_URL = "http://localhost:8080";
@@ -17,10 +17,6 @@ const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, abiertoAhor
         <div className="gym-card">
             <div className="gym-image-wrapper" style={{ flex: '0 0 35%' }}>
                 <img src={urlImagen} alt={nombre} />
-
-                <div className={`status-badge ${abiertoAhora ? 'open' : 'closed'}`}>
-                    {abiertoAhora ? '🟢 Abierto' : '🔴 Cerrado'}
-                </div>
             </div>
 
             <div className="gym-content">
@@ -34,10 +30,10 @@ const Gym = ({ placeId, nombre, direccion, puntuacion, totalResenas, abiertoAhor
 
                 <div className="gym-details">
                     <p className="gym-address">
-                        📍 {direccion}
+                         {direccion}
                     </p>
                     <p className="gym-description">
-                        Instalación deportiva registrada. Haz clic para ver horarios, fotos extra y ubicación en el mapa.
+                       Haz click para más detalles
                     </p>
                 </div>
 

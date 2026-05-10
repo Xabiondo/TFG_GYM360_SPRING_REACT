@@ -9,87 +9,106 @@ const GymDetails = () => {
     const navigate = useNavigate();
     const [gym, setGym] = useState(null);
     const [cargando, setCargando] = useState(true);
+    
+    // Estado para el nuevo comentario
+    const [nuevoComentario, setNuevoComentario] = useState("");
+    const user = JSON.parse(localStorage.getItem("user")); // Pillar usuario logueado
 
     useEffect(() => {
-        const fetchGym = async () => {
-            try {
-                const data = await obtenerGimnasioDetalle(id);
-                setGym(data);
-            } catch (error) {
-                console.error("Error al cargar el gimnasio:", error);
-            } finally {
-                setCargando(false);
-            }
-        };
         fetchGym();
     }, [id]);
 
-    if (cargando) return (
-        <div className="gyms-page">
-            <h2 style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Cargando...</h2>
-        </div>
-    );
+    const fetchGym = async () => {
+        try {
+            const data = await obtenerGimnasioDetalle(id);
+            setGym(data);
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setCargando(false);
+        }
+    };
 
-    if (!gym) return (
-        <div className="gyms-page">
-            <h2 style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Gimnasio no encontrado</h2>
-        </div>
-    );
+    const handleEnviarComentario = async () => {
+        if (!nuevoComentario.trim()) return;
+
+        // Aquí llamarías a tu servicio: postComentario(id, user.id, nuevoComentario)
+        // Por ahora, lo añadimos localmente para que lo veas:
+        const comentarioMock = {
+            usuarioNombre: user.nombre,
+            texto: nuevoComentario,
+            fecha: new Date().toLocaleDateString()
+        };
+
+        setGym({
+            ...gym,
+            comentarios: [...(gym.comentarios || []), comentarioMock]
+        });
+        setNuevoComentario("");
+        alert("¡Comentario añadido!");
+    };
+
+    if (cargando) return <div className="loading">Cargando...</div>;
+    if (!gym) return <div className="loading">Gimnasio no encontrado</div>;
 
     return (
         <div className="gyms-page">
             <Navbar />
             <div className="details-container">
-                <button className="back-btn" onClick={() => navigate(-1)}>← Volver a Gimnasios</button>
+                <button className="back-btn" onClick={() => navigate(-1)}>← Volver</button>
 
                 <div className="details-header">
-                    <img
-                        src={getImagenUrl(gym.fotoReferencia)}
-                        alt={gym.nombre}
-                        className="details-hero-img"
-                        onError={(e) => e.target.src = 'https://via.placeholder.com/400x300?text=Sin+Imagen'}
-                    />
+                    <img src={getImagenUrl(gym.fotoReferencia)} alt={gym.nombre} className="details-hero-img" />
                     <div className="details-title-box">
                         <h1>{gym.nombre}</h1>
                         <div className="badges-row">
-                            <span className="location-badge details-badge">📍 {gym.direccion}</span>
-                            <span className="rating-badge details-badge">★ {gym.puntuacion?.toFixed(1) ?? 'S/N'}/5</span>
+                            <span className="details-badge">📍 {gym.direccion}</span>
                             <span className={`status-badge ${gym.abiertoAhora ? 'open' : 'closed'}`}>
-                                {gym.abiertoAhora ? '🟢 Abierto' : '🔴 Cerrado'}
+                                {gym.abiertoAhora ? 'Abierto' : 'Cerrado'}
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <div className="details-grid">
-                    <div className="details-info-card">
-                        <h2>Información General</h2>
-                        {gym.precio && (
-                            <p className="gym-price" style={{ marginBottom: '1rem' }}>
-                                {gym.precio}€ <span className="period">/mes</span>
-                            </p>
-                        )}
-
-                        <h3 className="section-subtitle">Tipos</h3>
-                        <div className="tags-container">
-                            {gym.tipos?.split(',').map((tipo, i) => (
-                                <span key={i} className="gyms-badge" style={{ display: 'inline-block', margin: '4px' }}>
-                                    {tipo.trim()}
-                                </span>
-                            ))}
-                        </div>
-
-                        <h3 className="section-subtitle">Total reseñas</h3>
-                        <p className="details-text">📝 {gym.totalResenas ?? 0} reseñas</p>
-
-                        <button className="gym-btn" style={{ width: '100%', marginTop: '2rem' }}>
-                            Inscribirse Ahora
-                        </button>
+                    {/* INFO IZQUIERDA */}
+                    <div className="details-card">
+                        <h2>Información</h2>
+                        <p className="gym-price">{gym.precio}€<span className="period">/mes</span></p>
+                        <p className="details-text">★ {gym.puntuacion?.toFixed(1)} / 5 ({gym.totalResenas} reseñas)</p>
+                        <button className="gym-btn" style={{width: '100%'}}>Inscribirse</button>
                     </div>
 
-                    <div className="details-comments-card">
-                        <h2>Comentarios de Usuarios</h2>
-                        <p className="details-text">Aún no hay comentarios para este gimnasio.</p>
+                    {/* COMENTARIOS DERECHA */}
+                    <div className="details-card">
+                        <h2>Comentarios</h2>
+                        
+                        <div className="comments-list">
+                            {gym.comentarios?.length > 0 ? (
+                                gym.comentarios.map((c, i) => (
+                                    <div key={i} className="comment-item">
+                                        <p className="comment-author">{c.usuarioNombre}</p>
+                                        <p className="comment-text">{c.texto}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="details-text">No hay comentarios aún.</p>
+                            )}
+                        </div>
+
+                        {/* ESCRIBIR COMENTARIO */}
+                        {user ? (
+                            <div className="comment-form">
+                                <textarea 
+                                    placeholder="Escribe tu opinión..." 
+                                    value={nuevoComentario}
+                                    onChange={(e) => setNuevoComentario(e.target.value)}
+                                />
+                                <button className="gym-btn" onClick={handleEnviarComentario}>Enviar</button>
+                            </div>
+                        ) : (
+                            <p className="details-text" style={{marginTop: '1rem'}}>Inicia sesión para comentar.</p>
+                        )}
                     </div>
                 </div>
             </div>

@@ -78,7 +78,7 @@ def buscar_y_guardar(query, connection):
         print(f"Solicitando página {i+1} para: '{query}'...")
         response = requests.get(url, params=params).json()
         
-        # Verificar si la API devolvió un error (muy útil para depurar)
+
         if response.get('status') != 'OK' and response.get('status') != 'ZERO_RESULTS':
             print(f"⚠️ Atención: Estado de la API: {response.get('status')}")
             

@@ -19,11 +19,11 @@ public class Usuario {
     @Column(unique = true)
     private String email ;
 
-    private int codigoPostal;
+    @Column(name = "foto_perfil")
+    private String fotoPerfil;
 
-    private int latitud ;
 
-    private int longitud;
+
 
 
     private String contrasena ;
@@ -57,13 +57,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public int getCodigoPostal() {
-        return codigoPostal;
-    }
 
-    public void setCodigoPostal(int codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
 
     public String getContrasena() {
         return contrasena;
@@ -71,5 +65,22 @@ public class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+
+    public List<Oferta> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(List<Oferta> ofertas) {
+        this.ofertas = ofertas;
     }
 }

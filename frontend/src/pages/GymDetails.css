@@ -1,147 +1,200 @@
-/* Contenedor centralizado para los detalles */
+/* ========================
+   CONTENEDOR PRINCIPAL
+   ======================== */
 .details-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 30px 20px;
 }
 
-/* Botón de volver */
 .back-btn {
-  background: transparent;
-  color: var(--text-muted);
-  border: none;
-  font-size: 1rem;
-  font-family: inherit;
-  cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: color 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
 }
 
 .back-btn:hover {
-  color: var(--accent);
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Cabecera con la imagen grande */
+/* ========================
+   CABECERA (HEADER FOTO)
+   ======================== */
 .details-header {
-  position: relative;
-  width: 100%;
-  height: 350px;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  margin-bottom: 2rem;
+    position: relative;
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .details-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.6; /* Oscurecida para el modo stealth */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+    transition: transform 0.5s ease;
+}
+
+.details-header:hover .details-hero-img {
+    transform: scale(1.02);
 }
 
 .details-title-box {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 3rem 2rem 2rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 30px 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
 }
 
 .details-title-box h1 {
-  margin: 0 0 1rem 0;
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: var(--text-main);
+    margin: 0 0 12px 0;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -1px;
 }
 
 .badges-row {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
 .details-badge {
-  position: static; /* Quitamos el absolute que tiene la tarjeta pequeña */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
-/* Grid asimétrico (2 columnas) para Datos y Comentarios */
+/* ========================
+   GRID (DATOS Y COMENTARIOS)
+   ======================== */
 .details-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr; /* La columna derecha es más ancha */
+    gap: 25px;
 }
 
-.details-info-card, .details-comments-card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.details-info-card h2, .details-comments-card h2 {
-  margin-top: 0;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-main);
+.details-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
-.section-subtitle {
-  color: var(--text-main);
-  font-size: 1.1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+.details-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    text-transform: uppercase;
 }
 
-.details-text {
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-/* Lista de Comentarios */
+/* ========================
+   SECCIÓN COMENTARIOS
+   ======================== */
 .comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 10px; /* Para que la scrollbar no pise el texto */
 }
 
+/* Diseño de la "burbuja" de comentario */
 .comment-item {
-  background-color: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 3px solid var(--accent); /* Un toque de color de tu app */
+    transition: background 0.2s;
+}
+
+.comment-item:hover {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .comment-author {
-  font-weight: bold;
-  color: var(--text-main);
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.comment-date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin: 0;
 }
 
 .comment-text {
-  color: var(--text-muted);
-  font-style: italic;
-  margin: 0;
-  font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
 }
 
-/* Responsive */
-@media (max-width: 850px) {
-  .details-grid {
-    grid-template-columns: 1fr; /* Pasa a una sola columna en móvil */
-  }
-  
-  .details-header {
-    height: 250px;
-  }
-  
-  .details-title-box h1 {
-    font-size: 2.5rem;
-  }
+/* ========================
+   CAJA PARA ESCRIBIR
+   ======================== */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto; /* Lo empuja abajo del todo */
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.comment-form textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 12px;
+    border-radius: 8px;
+    resize: none;
+    height: 90px;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.comment-form textarea:focus {
+    border-color: var(--accent);
 }

@@ -36,6 +36,7 @@ public class AuthController {
         response.put("success" , true) ;
         response.put("message" , "usuario nuevo creado ");
         response.put("id" , nuevo.getId());
+
         return  ResponseEntity.ok(response);
     }
 
@@ -57,6 +58,7 @@ public class AuthController {
             response.put("id", usuarioEnBD.getId());
             response.put("nombre", usuarioEnBD.getNombre());
             response.put("email", usuarioEnBD.getEmail());
+            response.put("fotoPerfil" , usuarioEnBD.getFotoPerfil());
             return ResponseEntity.ok(response);
         } else {
             response.put("success", false);
