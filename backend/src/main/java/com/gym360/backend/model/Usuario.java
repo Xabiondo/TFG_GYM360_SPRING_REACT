@@ -23,9 +23,6 @@ public class Usuario {
     private String fotoPerfil;
 
 
-
-
-
     private String contrasena ;
 
     @OneToMany(mappedBy = "usuario")
