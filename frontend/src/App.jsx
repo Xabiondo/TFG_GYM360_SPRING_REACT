@@ -1,6 +1,5 @@
 import { Routes, Route , Navigate } from 'react-router-dom'
 
-import Home from './pages/Home'
 import Gyms from './pages/Gyms'
 import Offers from './pages/Offers'
 import Login from './pages/Login'
@@ -13,6 +12,7 @@ import { Logout } from './pages/Logout'
 import ProtectedRoute from './utils/ProtectedRoute'
 import Progreso from './pages/Progreso'
 import GymDetails from './pages/GymDetails'
+import Nutricion from './pages/Nutricion'
 
 
 
@@ -24,8 +24,7 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/' element={<Home/>} />
-
+<Route path='/' element={<Nutricion />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/gym" element={<Gyms />} />

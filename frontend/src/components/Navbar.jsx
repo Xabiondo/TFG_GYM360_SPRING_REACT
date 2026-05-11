@@ -21,7 +21,7 @@ const Navbar = () => {
 
         <div className="navbar-center">
           <ul className="nav-links">
-            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/nutricion">Nutricion</Link></li>
             <li><Link to="/progreso">Progreso</Link></li>
             <li><Link to="/gym">Gimnasios</Link></li>
             <li><Link to="/offers">Ofertas</Link></li>

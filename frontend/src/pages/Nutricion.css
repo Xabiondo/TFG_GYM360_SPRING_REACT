@@ -1,0 +1,120 @@
+.nutricion-page {
+  min-height: 100vh;
+  color: #f1f1f1;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding-bottom: 4rem;
+}
+
+.nutricion-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.nutricion-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.nutricion-header h1 {
+  font-size: 2.5rem;
+  margin: 1rem 0 0.5rem;
+  color: #ffffff;
+}
+
+.nutricion-header p {
+  color: #a1a1aa;
+}
+
+.empty-state {
+  text-align: center;
+  background-color: #181a20;
+  border: 1px dashed #272a30;
+  padding: 3rem;
+  border-radius: 12px;
+  color: #a1a1aa;
+}
+
+/* --- ESTILOS DEL SELECTOR --- */
+.selector-area {
+  background-color: #181a20;
+  border: 1px solid #272a30;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.selector-area label {
+  font-size: 0.95rem;
+  color: #a1a1aa;
+  font-weight: 600;
+}
+
+.dieta-select {
+  background-color: #0f1115;
+  color: #ffffff;
+  border: 1px solid #272a30;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.dieta-select:focus {
+  border-color: var(--acent);
+}
+
+/* --- ESTILOS DE LA DIETA (Compartidos con PT) --- */
+.response-area {
+  background-color: #181a20;
+  border: 1px solid #272a30;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.dieta-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.dieta-caracteristicas {
+  color: #a1a1aa;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.dias-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.dia-card {
+  background-color: #0f1115;
+  border: 1px solid #272a30;
+  border-left: 3px solid var(--acent);
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.dia-title {
+  color: #ffffff;
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.dia-text {
+  color: #d4d4d8;
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+}
