@@ -1,20 +1,18 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import { getAssessment } from "../services/personalTrainerService"; 
+import { getAssessment, saveAssessment } from "../services/personalTrainerService"; 
 import "./PersonalTrainer.css"; 
 
 const PersonalTrainer = () => {
-  // 1. Nuestros estados (las variables donde guardamos datos)
   const [mensaje, setMensaje] = useState('');
-  const [respuestaEntrenador, setRespuestaEntrenador] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // <-- ¡Faltaba esto!
+  const [dietaObj, setDietaObj] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  // 2. Función para cuando escribes en la caja de texto
   const handleInputChange = (e) => {
     setMensaje(e.target.value);
   }
 
-  // 3. Función para el botón de Enviar
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
@@ -23,22 +21,34 @@ const PersonalTrainer = () => {
       return; 
     }
 
-    // Encendemos el modo "Cargando" y limpiamos respuestas viejas
     setIsLoading(true); 
-    setRespuestaEntrenador(''); 
+    setDietaObj(null); 
 
     try {
-      // Llamamos al archivo del Service
-      const datos = await getAssessment(mensaje);
-      setRespuestaEntrenador(datos);
+      const datosJSON = await getAssessment(mensaje);
+      setDietaObj(datosJSON);
     } catch (error) {
       console.error(error);
       alert("Hubo un error al consultar al entrenador.");
     } finally {
-      // Apagamos el modo "Cargando" cuando termine (falle o acierte)
       setIsLoading(false); 
     }
   }
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await saveAssessment(dietaObj);
+      alert("¡Dieta guardada con éxito! Podrás verla en la sección de Nutrición.");
+    } catch (error) {
+      console.error(error);
+      alert("Error al guardar la dieta.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  const diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
   return (
     <>
@@ -46,7 +56,6 @@ const PersonalTrainer = () => {
       <div className="personal-trainer">
         <div className="pt-container">
           <div className="pt-header">
-
             <h1>Entrenador Virtual</h1>
             <p>Diseña tu rutina, pregunta sobre nutrición o mejora tu técnica.</p>
           </div>
@@ -58,7 +67,7 @@ const PersonalTrainer = () => {
               className="pt-input"
               value={mensaje} 
               onChange={handleInputChange} 
-              placeholder="Ej: Quiero una rutina de 3 días para hipertrofia..."
+              placeholder="Ej: Quiero una dieta y rutina de 3 días para hipertrofia..."
               rows="4" 
             />
 
@@ -70,17 +79,42 @@ const PersonalTrainer = () => {
               {isLoading ? 'Analizando...' : 'Generar Plan'}
             </button>
           </div>
-          {(respuestaEntrenador !== '' || isLoading) && (
+
+          {(dietaObj !== null || isLoading) && (
             <div className="response-area">
               <div className="response-header">
                 <h3>Respuesta del Sistema</h3>
+                
+                {!isLoading && dietaObj && (
+                  <button 
+                    className="save-button" 
+                    onClick={handleSave} 
+                    disabled={isSaving}
+                  >
+                    {isSaving ? 'Guardando...' : 'Guardar Dieta'}
+                  </button>
+                )}
               </div>
               
               <div className="response-content">
                 {isLoading ? (
-                  <p className="loading-text">Procesando tu solicitud...</p>
+                  <p className="loading-text">Procesando tu solicitud (esto puede tardar unos segundos)...</p>
                 ) : (
-                  <pre>{respuestaEntrenador}</pre>
+                  <div className="dieta-visual">
+                    <h2 className="dieta-title">{dietaObj.nombreDieta}</h2>
+                    <p className="dieta-caracteristicas">
+                      {dietaObj.caracteristicas}
+                    </p>
+                    
+                    <div className="dias-grid">
+                      {diasSemana.map((dia) => (
+                        <div key={dia} className="dia-card">
+                          <h4 className="dia-title">{dia}</h4>
+                          <p className="dia-text">{dietaObj[dia]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

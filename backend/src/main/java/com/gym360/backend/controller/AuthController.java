@@ -30,6 +30,7 @@ public class AuthController {
             response.put("message" , "email ya registrado ");
             return ResponseEntity.badRequest().body(response);
         }
+
         String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
         usuario.setContrasena(contrasenaEncriptada);
         Usuario nuevo = usuarioRepositorio.save(usuario);
