@@ -1,20 +1,21 @@
+
+
 .offer-card {
     display: flex;
     flex-direction: row;
-    background-color: var(--bg-card, #1a1a1a);
-    border: 1px solid var(--border, #333);
-    border-radius: 16px;
+    background-color: #0f1115; /* Fondo principal muy oscuro */
+    border: 1px solid #272a30; /* Borde sutil */
+    border-radius: 12px;
     padding: 0;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.2s ease; /* Transición suave solo en el borde */
     height: 250px;
     margin-bottom: 2rem;
 }
 
+
 .offer-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-color: var(--text-muted, #777);
+    border-color: var(--acent);
 }
 
 .offer-votes {
@@ -23,31 +24,33 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: #181a20; /* Un gris un pelín más claro para diferenciar */
     min-width: 60px;
-    border-right: 1px solid var(--border, #333);
+    border-right: 1px solid #272a30;
 }
 
 .vote-count {
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--text-main, #fff);
+    color: #ffffff;
     margin: 0.5rem 0;
 }
 
 .vote-btn {
     background: none;
     border: none;
-    color: var(--text-muted, #888);
+    color: #a1a1aa;
     cursor: pointer;
     font-size: 1.2rem;
     padding: 0;
+    transition: color 0.2s;
 }
 
 .vote-btn:hover {
-    color: var(--accent, #007bff);
+    color: var(--acent);
 }
 
+/* --- CONTENIDO DE LA OFERTA --- */
 .offer-content {
     flex: 1;
     padding: 1.5rem;
@@ -59,11 +62,11 @@
 .offer-content h3 {
     margin: 0;
     font-size: 1.4rem;
-    color: var(--text-main, #fff);
+    color: #ffffff;
 }
 
 .offer-description {
-    color: var(--text-muted, #aaa);
+    color: #cccccc; /* El mismo color que los subtítulos de tus gimnasios */
     font-size: 0.95rem;
     margin: 1rem 0;
     display: -webkit-box;
@@ -72,6 +75,7 @@
     overflow: hidden;
 }
 
+/* --- FOOTER Y PRECIO --- */
 .offer-footer {
     display: flex;
     align-items: center;
@@ -82,29 +86,33 @@
 .price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--text-main, #fff);
+    color: var(--acent); /* El precio destaca con tu color de acento */
     margin: 0;
 }
 
+/* Botón humilde tipo "outline" */
 .offer-button {
     padding: 0.8rem 1.5rem;
-    background-color: var(--text-main, #fff);
-    color: black;
-    border: none;
+    background-color: transparent;
+    color: var(--acent);
+    border: 1px solid var(--acent);
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    text-transform: uppercase;
+    transition: all 0.2s;
 }
 
 .offer-button:hover {
-    background-color: var(--accent, #ccc);
+    background-color: var(--acent);
+    color: #000;
 }
 
+/* --- IMAGEN --- */
 .offer-image-container {
     width: 30%;
     min-width: 200px;
     position: relative;
+    border-left: 1px solid #272a30;
 }
 
 .offer-image-container img {
@@ -114,23 +122,3 @@
     display: block;
 }
 
-@media (max-width: 768px) {
-    .offer-card {
-        flex-direction: column;
-        height: auto;
-    }
-    
-    .offer-votes {
-        flex-direction: row;
-        gap: 1rem;
-        border-right: none;
-        border-bottom: 1px solid var(--border, #333);
-        padding: 0.5rem;
-    }
-    
-    .offer-image-container {
-        width: 100%;
-        height: 200px;
-        order: -1;
-    }
-}

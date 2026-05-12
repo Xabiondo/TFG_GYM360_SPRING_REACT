@@ -1,6 +1,5 @@
 package com.gym360.backend.controller;
 
-import com.gym360.backend.model.UsuarioAsistencia;
 import com.gym360.backend.model.UsuarioPeso;
 import com.gym360.backend.service.ProgresoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,26 +49,6 @@ public class ProgresoController {
         return ResponseEntity.ok(respuesta);
     }
 
-    @PostMapping("/asistencia")
-    public ResponseEntity<?> guardarAsistencia(@RequestBody Map<String, Integer> payload) {
-        int usuarioId = payload.get("usuarioId");
-        boolean nuevoRegistro = progresoService.registrarAsistencia(usuarioId);
 
-        if (nuevoRegistro) {
-            return ResponseEntity.ok(Map.of("mensaje", "¡Día entrenado registrado!"));
-        } else {
-            return ResponseEntity.badRequest().body(Map.of("mensaje", "Ya habías registrado tu entreno hoy."));
-        }
-    }
 
-    @GetMapping("/asistencia/{usuarioId}")
-    public ResponseEntity<List<String>> obtenerAsistencias(@PathVariable int usuarioId) {
-        List<UsuarioAsistencia> historial = progresoService.obtenerHistorialAsistencia(usuarioId);
-        List<String> fechas = new ArrayList<>();
-
-        for (UsuarioAsistencia a : historial) {
-            fechas.add(a.getFecha().toString());
-        }
-        return ResponseEntity.ok(fechas);
-    }
 }

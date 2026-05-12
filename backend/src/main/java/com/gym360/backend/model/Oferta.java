@@ -30,8 +30,6 @@ public class Oferta {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "oferta")
-    private List<OfertaComentario> ofertaComentarios;
 
     public Oferta(){
 
@@ -101,11 +99,4 @@ public class Oferta {
         this.usuario = usuario;
     }
 
-    public List<OfertaComentario> getOfertaComentarios() {
-        return ofertaComentarios;
-    }
-
-    public void setOfertaComentarios(List<OfertaComentario> ofertaComentarios) {
-        this.ofertaComentarios = ofertaComentarios;
-    }
 }

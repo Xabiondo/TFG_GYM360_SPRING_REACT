@@ -1,9 +1,7 @@
 package com.gym360.backend.service;
 
 import com.gym360.backend.model.Usuario;
-import com.gym360.backend.model.UsuarioAsistencia;
 import com.gym360.backend.model.UsuarioPeso;
-import com.gym360.backend.repository.UsuarioAsistenciaRepository;
 import com.gym360.backend.repository.UsuarioPesoRepository;
 import com.gym360.backend.repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,6 @@ public class ProgresoService {
 
     @Autowired
     private UsuarioPesoRepository pesoRepository;
-
-    @Autowired
-    private UsuarioAsistenciaRepository asistenciaRepository;
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -52,24 +47,5 @@ public class ProgresoService {
         return pesoRepository.findByUsuarioIdOrderByFechaAsc(usuarioId);
     }
 
-    public boolean registrarAsistencia(int usuarioId) {
-        Usuario usuario = usuarioRepositorio.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        LocalDate hoy = LocalDate.now();
-
-        if (asistenciaRepository.existsByUsuarioIdAndFecha(usuarioId, hoy)) {
-            return false;
-        }
-
-        UsuarioAsistencia asistencia = new UsuarioAsistencia();
-        asistencia.setUsuario(usuario);
-        asistencia.setFecha(hoy);
-        asistenciaRepository.save(asistencia);
-        return true;
-    }
-
-    public List<UsuarioAsistencia> obtenerHistorialAsistencia(int usuarioId) {
-        return asistenciaRepository.findByUsuarioIdOrderByFechaAsc(usuarioId);
-    }
 }
