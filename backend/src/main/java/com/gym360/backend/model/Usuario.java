@@ -25,6 +25,7 @@ public class Usuario {
     private String contrasena ;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<Oferta> ofertas;
 
     public Usuario(){}

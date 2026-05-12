@@ -1,85 +1,162 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import './Progreso.css'; 
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+// Importamos solo lo del peso
+import { getPesoHistorial, registrarPeso } from '../services/progresoService';
+import './Progreso.css';
 
 const Progreso = () => {
+    // 1. Estados
+    const [pesos, setPesos] = useState([]);
+    const [inputPeso, setInputPeso] = useState("");
+    
+    // Sacamos la fecha de hoy para ponerla por defecto en el selector
+    const fechaActual = new Date();
+    const añoHoy = fechaActual.getFullYear();
+    
+    let mesHoy = fechaActual.getMonth() + 1;
+    if (mesHoy < 10) {
+        mesHoy = "0" + mesHoy;
+    }
+    
+    let diaHoy = fechaActual.getDate();
+    if (diaHoy < 10) {
+        diaHoy = "0" + diaHoy;
+    }
+    const hoyString = añoHoy + "-" + mesHoy + "-" + diaHoy;
 
-  const stats = {
-    workoutsThisMonth: 12,
-    currentWeight: 78.5,
-    streak: 5
-  };
+    // Estado para la fecha elegida
+    const [inputFecha, setInputFecha] = useState(hoyString);
 
-  const historyData = [
-    { id: 1, date: "28 Abr", exercise: "Press de Banca", weight: "80 kg", reps: "4 x 8" },
-    { id: 2, date: "26 Abr", exercise: "Sentadilla Libre", weight: "100 kg", reps: "4 x 10" },
-    { id: 3, date: "24 Abr", exercise: "Peso Muerto", weight: "120 kg", reps: "3 x 5" },
-    { id: 4, date: "22 Abr", exercise: "Dominadas", weight: "Corporal", reps: "4 x 12" },
-    { id: 5, date: "20 Abr", exercise: "Press Militar", weight: "50 kg", reps: "3 x 10" },
-  ];
+    // 2. Pillamos el usuario
+    const userString = localStorage.getItem("user");
+    let user = null;
+    if (userString !== null) {
+        user = JSON.parse(userString);
+    }
 
-  return (
-    <div className="page-wrapper">
-      <Navbar />
+    // 3. Cargar historial al inicio
+    useEffect(() => {
+        const cargarDatos = async () => {
+            if (user !== null && user.id !== undefined) {
+                const datosPeso = await getPesoHistorial(user.id);
+                setPesos(datosPeso);
+            }
+        };
+        cargarDatos();
+    }, []);
 
-      <div className="progress-container">
-        <header className="offers-header">
-          <h1>MI <span className="text-gradient">PROGRESO</span></h1>
-          <p>Rastrea tus marcas y aplasta tus objetivos.</p>
-        </header>
+    // 4. Guardar un nuevo peso
+    const handlePeso = async () => {
+        if (inputPeso === "") {
+            return; // Si no hay peso, no hacemos nada
+        }
+        if (inputFecha === "") {
+            return; // Si no hay fecha, no hacemos nada
+        }
+        
+        // Enviamos el usuario, el peso y la FECHA elegida
+        await registrarPeso(user.id, inputPeso, inputFecha);
+        
+        // Recargamos los datos para que la gráfica se actualice
+        const nuevosPesos = await getPesoHistorial(user.id);
+        setPesos(nuevosPesos);
+        
+        // Vaciamos la cajita del peso
+        setInputPeso("");
+    };
 
+    // 5. Calcular peso actual (el último de la lista)
+    let pesoActual = "?";
+    if (pesos.length > 0) {
+        const ultimoIndice = pesos.length - 1;
+        pesoActual = pesos[ultimoIndice].peso;
+    }
 
-        <div className="profile-grid">
+    return (
+        <div className="pg-wrapper">
+            <Navbar />
+            <div className="pg-container">
 
-          <div className="profile-card">
-            <div className="avatar-circle">🏆</div>
-            <div className="user-role">Nivel Avanzado</div>
-            <div className="profile-info">
-              <h2>Tus Marcas</h2>
-              <p className="user-email">Mantén el ritmo</p>
-            </div>
+                {/* TARJETA 1: REGISTRAR PESO */}
+                <div className="pg-card">
+                    <h2>Control de Peso</h2>
+                    <div className="pg-stats-grid">
+                        <div className="pg-stat-box">
+                            <span>Peso Actual</span>
+                            <strong>{pesoActual} kg</strong>
+                        </div>
+                    </div>
 
-            <div className="stats-row">
-              <div className="stat">
-                <span className="stat-val">{stats.workoutsThisMonth}</span>
-                <span className="stat-label">Entrenos</span>
-              </div>
-              <div className="stat">
-                <span className="stat-val">{stats.currentWeight}</span>
-                <span className="stat-label">Peso (Kg)</span>
-              </div>
-              <div className="stat">
-                <span className="stat-val">🔥 {stats.streak}</span>
-                <span className="stat-label">Racha</span>
-              </div>
-            </div>
-          </div>
-
-
-          <div className="calendar-container-card">
-            <div className="card-header-row">
-              <h2>Últimos Registros</h2>
-              <span className="badge-info">Abril 2026</span>
-            </div>
-
-            <div className="history-list">
-              {historyData.map((item) => (
-                <div key={item.id} className="history-item">
-                  <div className="history-date">{item.date}</div>
-                  <div className="history-details">
-                    <span className="history-exercise">{item.exercise}</span>
-                    <span className="history-reps">{item.reps}</span>
-                  </div>
-                  <div className="history-weight">{item.weight}</div>
+                    <div className="pg-actions">
+                        <div className="pg-input-peso">
+                            <input
+                                type="date"
+                                value={inputFecha}
+                                onChange={(e) => setInputFecha(e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Ej: 75.5..."
+                                value={inputPeso}
+                                onChange={(e) => setInputPeso(e.target.value)}
+                            />
+                            <button onClick={handlePeso}>Guardar</button>
+                        </div>
+                    </div>
                 </div>
-              ))}
+
+                {/* TARJETA 2: GRÁFICA */}
+                <div className="pg-card">
+                    <h2>Tu Evolución</h2>
+                    <div style={{ width: '100%', height: 300, marginTop: '20px' }}>
+                        <ResponsiveContainer>
+                            <LineChart data={pesos} margin={{ top: 5, right: 20, bottom: 5, left: -20 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#272a30" vertical={false} />
+                                <XAxis 
+                                    dataKey="fecha" 
+                                    stroke="#a1a1aa" 
+                                    fontSize={12} 
+                                    tickMargin={10}
+                                    tickFormatter={(str) => {
+                                        const partes = str.split('-');
+                                        if (partes.length === 3) {
+                                            return partes[2] + "/" + partes[1]; // Pone "Dia/Mes"
+                                        } else {
+                                            return str;
+                                        }
+                                    }}
+                                />
+                                <YAxis 
+                                    stroke="#a1a1aa" 
+                                    fontSize={12} 
+                                    domain={['dataMin - 2', 'dataMax + 2']} 
+                                    tickFormatter={(val) => val + " kg"}
+                                    tickMargin={10}
+                                />
+                                <Tooltip 
+                                    contentStyle={{ backgroundColor: '#181a20', borderColor: '#272a30', borderRadius: '8px' }}
+                                    itemStyle={{ color: 'var(--acent)', fontWeight: 'bold' }}
+                                    labelStyle={{ color: '#a1a1aa', marginBottom: '5px' }}
+                                    formatter={(value) => [value + " kg", 'Peso']}
+                                    labelFormatter={(label) => "Fecha: " + label}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="peso"
+                                    stroke="var(--acent)"
+                                    strokeWidth={4}
+                                    dot={{ r: 4, fill: '#181a20', stroke: 'var(--acent)', strokeWidth: 2 }}
+                                    activeDot={{ r: 6, fill: 'var(--acent)', stroke: '#fff' }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
             </div>
-            
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Progreso;

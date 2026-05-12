@@ -8,36 +8,51 @@ const Nutricion = () => {
   const [selectedDietaId, setSelectedDietaId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-useEffect(() => {
-  const fetchDietas = async () => {
-    try {
-      // 1. Pillamos el usuario del localStorage
-      const user = JSON.parse(localStorage.getItem("user"));
-      
-      // 2. Si no hay usuario, no intentamos cargar nada
-      if (!user || !user.id) {
-        console.error("No se encontró el ID del usuario");
+  useEffect(() => {
+    const fetchDietas = async () => {
+      try {
+
+        const userString = localStorage.getItem("user");
+        if (!userString) {
+          console.error("No hay usuario en localStorage");
+          setIsLoading(false);
+          return;
+        }
+
+        const user = JSON.parse(userString);
+        if (!user || !user.id) {
+          console.error("No se encontró el ID del usuario");
+          setIsLoading(false);
+          return;
+        }
+
+        const data = await getDietasUsuario(user.id); 
+        
+        if (Array.isArray(data)) {
+          setDietas(data);
+          if (data.length > 0) {
+            setSelectedDietaId(data[0].id); 
+          }
+        } else {
+          console.warn("El servidor no devolvió una lista de dietas. Dejando vacío.");
+          setDietas([]);
+        }
+
+      } catch (error) {
+        console.error("Error cargando dietas:", error);
+        setDietas([]); 
+      } finally {
         setIsLoading(false);
-        return;
       }
+    };
+    
+    fetchDietas();
+  }, []);
 
-      // 3. Usamos el ID real (user.id) en lugar del 1
-      const data = await getDietasUsuario(user.id); 
-      setDietas(data);
-      
-      if (data.length > 0) {
-        setSelectedDietaId(data[0].id); 
-      }
-    } catch (error) {
-      console.error("Error cargando dietas:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  fetchDietas();
-}, []);
-
-  const dietaActiva = dietas.find(d => d.id.toString() === selectedDietaId.toString());
+  const dietaActiva = Array.isArray(dietas) 
+    ? dietas.find(d => d.id?.toString() === selectedDietaId?.toString())
+    : null;
+    
   const diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 
   return (
@@ -52,7 +67,7 @@ useEffect(() => {
 
           {isLoading ? (
             <p className="loading-text">Cargando tus dietas...</p>
-          ) : dietas.length === 0 ? (
+          ) : !Array.isArray(dietas) || dietas.length === 0 ? (
             <div className="empty-state">
               <p>Aún no tienes ninguna dieta guardada.</p>
               <p>¡Ve al Entrenador Virtual para generar una!</p>
@@ -99,7 +114,6 @@ useEffect(() => {
             </div>
           )}
           
-
         </div>
       </div>
     </>
