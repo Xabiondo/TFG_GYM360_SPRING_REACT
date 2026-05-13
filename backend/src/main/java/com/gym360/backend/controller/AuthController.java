@@ -1,6 +1,5 @@
 package com.gym360.backend.controller;
 
-import com.gym360.backend.configuration.Configuracion;
 import com.gym360.backend.model.Usuario;
 import com.gym360.backend.repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String , Object>>signup(@RequestBody Usuario usuario){
+    public ResponseEntity<Map<String , Object>> signup(@RequestBody Usuario usuario){
         Map<String , Object> response = new HashMap<>();
 
         if (usuarioRepositorio.existsByEmail(usuario.getEmail())){
@@ -34,11 +33,16 @@ public class AuthController {
         String contrasenaEncriptada = passwordEncoder.encode(usuario.getContrasena());
         usuario.setContrasena(contrasenaEncriptada);
         Usuario nuevo = usuarioRepositorio.save(usuario);
+
         response.put("success" , true) ;
         response.put("message" , "usuario nuevo creado ");
         response.put("id" , nuevo.getId());
 
-        return  ResponseEntity.ok(response);
+        response.put("nombre", nuevo.getNombre());
+        response.put("email", nuevo.getEmail());
+        response.put("fotoPerfil", nuevo.getFotoPerfil());
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")

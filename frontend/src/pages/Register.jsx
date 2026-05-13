@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
-
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,9 +17,10 @@ const Register = () => {
       alert("Las contraseñas no coinciden");
       return;
     }
-    if(nombre == null){
-      alert("pon un nombre "); 
-      return ;
+    
+    if (name.trim() === '') {
+      alert("Pon un nombre válido"); 
+      return;
     }
 
     const usuarioData = {
@@ -42,10 +42,19 @@ const Register = () => {
 
       if (data.success) {
         alert('Registro exitoso');
-        login(data); // <-- Loguea al usuario recién registrado
-        navigate('/inicio'); // <-- Redirige a la app
+        
+        // Creamos un objeto limpio para el localStorage
+        const usuarioParaLocalStorage = {
+            id: data.id,
+            nombre: data.nombre,
+            email: data.email,
+            fotoPerfil: data.fotoPerfil || null 
+        };
+
+        login(usuarioParaLocalStorage); 
+        navigate('/inicio'); 
       } else {
-        alert('Error: ' + data.message);
+        alert('Error: ' + (data.message || 'Error en el registro'));
       }
     } catch (error) {
       console.error('Error:', error);
@@ -59,7 +68,7 @@ const Register = () => {
         <h2>Registrarse</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Nombre</label>
+            <label htmlFor="nombre">Nombre</label>
             <input
               type="text"
               id="nombre"
@@ -79,7 +88,7 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
+            <label htmlFor="contrasena">Contraseña</label>
             <input
               type="password"
               id="contrasena"

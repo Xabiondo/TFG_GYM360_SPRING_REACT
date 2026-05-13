@@ -1,8 +1,8 @@
-/* MyProfile.css */
 .profile-page-wrapper {
   max-width: 900px;
   margin: 50px auto;
   padding: 0 20px;
+  color: #fff;
 }
 
 .profile-header {
@@ -10,70 +10,62 @@
   margin-bottom: 30px;
 }
 
-/* La tarjeta estilo Gym */
 .profile-main-card {
   display: flex;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  background-color: #15171a;
+  border: 1px solid #2a2d35;
+  border-radius: 12px;
   overflow: hidden;
-  transition: all 0.3s ease;
   min-height: 350px;
 }
 
-/* Sección de imagen (Izquierda) */
+/* --- SECCIÓN IMAGEN --- */
 .profile-image-section {
   width: 35%;
-  position: relative;
-  background: #252525;
+  background-color: #0f1115;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid var(--border);
-  padding: 20px;
+  border-right: 1px solid #2a2d35;
+  padding: 30px 20px;
 }
 
 .profile-avatar {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--accent);
+  border: 2px solid var(--accent, #fff);
 }
 
 .role-badge {
   margin-top: 15px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  color: white;
+  background: #2a2d35;
+  color: #fff;
   padding: 6px 12px;
   border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 .btn-change-photo {
   margin-top: 15px;
   background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 6px 12px;
+  color: var(--accent, #fff);
+  border: 1px solid var(--accent, #fff);
+  padding: 8px 16px;
   border-radius: 6px;
-  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-change-photo:hover {
-  background: var(--accent);
-  color: black;
+  background: var(--accent, #fff);
+  color: #000;
 }
 
-/* Contenido del formulario (Derecha) */
+/* --- SECCIÓN DATOS --- */
 .profile-content {
   flex: 1;
   padding: 2.5rem;
@@ -84,9 +76,7 @@
 
 .profile-title-row h2 {
   margin: 0;
-  font-size: 1.8rem;
-  color: var(--text-main);
-  text-transform: uppercase;
+  font-size: 1.5rem;
 }
 
 .input-group {
@@ -97,55 +87,76 @@
 
 .input-group label {
   font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-weight: 600;
+  color: #a1a1aa;
+  font-weight: bold;
 }
 
 .profile-input {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  color: var(--text-main);
+  background-color: #1e2025;
+  border: 1px solid #333;
+  color: #fff;
   padding: 12px;
   border-radius: 8px;
   font-size: 1rem;
-  outline: none;
 }
 
 .profile-input.readonly {
   background-color: transparent;
-  border-color: transparent;
-  color: var(--text-muted);
-  cursor: not-allowed;
+  border: none;
+  color: #777;
   padding-left: 0;
 }
 
-/* Botones con tu estilo original */
+/* --- BOTONES CLAROS Y VISIBLES --- */
 .profile-actions {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-top: auto;
 }
 
 .save-btn {
-  background-color: var(--accent);
-  color: black;
+  background-color: var(--accent, #f1f1f1);
+  color: #000;
   border: none;
-  padding: 0.8rem 2rem;
-  font-size: 0.9rem;
-  font-weight: 700;
+  padding: 10px 20px;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.save-btn:hover {
+  opacity: 0.8;
 }
 
 .cancel-btn {
   background: transparent;
-  color: var(--text-main);
-  border: 1px solid var(--border);
-  padding: 0.8rem 2rem;
+  color: #fff;
+  border: 1px solid #666;
+  padding: 10px 20px;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
-  text-transform: uppercase;
 }
+
+.cancel-btn:hover {
+  border-color: #fff;
+}
+
+.logout-btn {
+  background: transparent;
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: auto; /* Esto empuja el botón a la derecha del todo */
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #ff4d4d;
+  color: #fff;
+}
+

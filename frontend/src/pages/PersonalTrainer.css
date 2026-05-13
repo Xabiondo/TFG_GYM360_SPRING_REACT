@@ -57,22 +57,28 @@
 }
 
 .pt-button {
-  background-color: var(--acent);
-  color: #000;
+  background-color: transparent;
+  color: var(--acent);
+  border: 1px solid var(--acent);
   font-weight: bold;
   font-size: 1rem;
-  border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  align-self: flex-end; /* Lo tira a la derecha */
-  transition: background-color 0.2s;
+  align-self: flex-end;
+  transition: all 0.2s;
+}
+
+.pt-button:hover:not(:disabled) {
+  background-color: var(--acent);
+  color: #000;
 }
 
 .pt-button:disabled {
-  background-color: #3f3f46;
+  border-color: #3f3f46;
   color: #a1a1aa;
   cursor: not-allowed;
+  background-color: transparent;
 }
 
 .response-area {
@@ -94,8 +100,6 @@
   margin: 2rem 0;
   font-style: italic;
 }
-
-
 
 .response-header {
   display: flex;
@@ -131,6 +135,7 @@
   border-color: #3f3f46;
   color: #a1a1aa;
   cursor: not-allowed;
+  background-color: transparent;
 }
 
 .dieta-title {
@@ -151,7 +156,6 @@
   grid-template-columns: 1fr; 
   gap: 1rem;
 }
-
 
 .dia-card {
   background-color: #0f1115; 

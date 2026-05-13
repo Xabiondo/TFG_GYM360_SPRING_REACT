@@ -5,7 +5,7 @@ import { updateUser, uploadProfilePhoto } from "../services/UserService";
 import "./MyProfile.css";
 
 const MyProfile = () => {
-  const { user, login, loading } = useAuth();
+  const { user, login, logout, loading } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [nombre, setNombre] = useState("");
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -35,10 +35,9 @@ const MyProfile = () => {
         fotoNombre = res.nombreArchivo;
       }
 
-
       await updateUser(user.id, { nombre, fotoPerfil: fotoNombre });
       login({ ...user, nombre, fotoPerfil: fotoNombre });
-      
+
       setEditMode(false);
       alert("¡Perfil actualizado!");
     } catch (err) {
@@ -60,27 +59,26 @@ const MyProfile = () => {
   return (
     <div className="page-wrapper">
       <Navbar />
-      
+
       <div className="profile-page-wrapper">
         <header className="profile-header">
           <h1 className="text-gradient">Configuración de Perfil</h1>
         </header>
 
         <div className="profile-main-card">
-          {/* SECCIÓN IZQUIERDA (IMAGEN) */}
           <div className="profile-image-section">
             {photoPreview ? (
               <img src={photoPreview} alt="Perfil" className="profile-avatar" />
             ) : (
-              <div className="profile-avatar" style={{display: 'flex', alignItems:'center', justifyContent:'center', background:'#333', fontSize:'3rem'}}>
+              <div className="profile-avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#333', fontSize: '3rem' }}>
                 {user.nombre?.charAt(0).toUpperCase()}
               </div>
             )}
-            
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              style={{display: 'none'}} 
+
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
               onChange={(e) => {
                 const file = e.target.files[0];
                 if (file) {
@@ -90,16 +88,12 @@ const MyProfile = () => {
               }}
               accept="image/*"
             />
-            
-            {editMode ? (
-              <button className="btn-change-photo" onClick={() => fileInputRef.current.click()}>
-                Cambiar foto
-              </button>
-            ) : (
-              <span className="role-badge">Miembro Premium</span>
-            )}
-          </div>
 
+            <button className="btn-change-photo" onClick={() => fileInputRef.current.click()}>
+              Cambiar foto
+            </button>
+
+          </div>
 
           <div className="profile-content">
             <div className="profile-title-row">
@@ -108,7 +102,7 @@ const MyProfile = () => {
 
             <div className="input-group">
               <label>Nombre Completo</label>
-              <input 
+              <input
                 className={`profile-input ${!editMode ? 'readonly' : ''}`}
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
@@ -118,7 +112,7 @@ const MyProfile = () => {
 
             <div className="input-group">
               <label>Correo Electrónico (No editable)</label>
-              <input 
+              <input
                 className="profile-input readonly"
                 value={user.email}
                 readOnly
@@ -136,9 +130,14 @@ const MyProfile = () => {
                   </button>
                 </>
               ) : (
-                <button className="save-btn" onClick={() => setEditMode(true)}>
-                  Editar Perfil
-                </button>
+                <>
+                  <button className="save-btn" onClick={() => setEditMode(true)}>
+                    Editar Perfil
+                  </button>
+                  <button className="logout-btn" onClick={logout}>
+                    Cerrar Sesión
+                  </button>
+                </>
               )}
             </div>
           </div>

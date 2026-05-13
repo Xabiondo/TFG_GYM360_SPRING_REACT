@@ -110,10 +110,11 @@
   margin-top: auto;
 }
 
+/* --- BOTÓN GIMNASIOS (Estilo Outline) --- */
 .gym-btn {
-  background-color: var(--accent);
-  color: black;
-  border: none;
+  background-color: transparent;
+  color: var(--acent);
+  border: 1px solid var(--acent);
   padding: 0.7rem 1.5rem;
   font-size: 0.9rem;
   font-weight: 700;
@@ -125,8 +126,7 @@
 }
 
 .gym-btn:hover {
-  background-color: #e0e0e0;
+  background-color: var(--acent);
+  color: #000;
   transform: translateY(-1px);
-  box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
-
