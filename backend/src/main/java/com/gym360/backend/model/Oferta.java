@@ -1,6 +1,7 @@
 package com.gym360.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,15 +21,21 @@ public class Oferta {
 
     private int precio ;
 
+    @Column(columnDefinition = "TEXT")
     private  String enlace ;
 
     private int popularidad ;
 
+    @Column(columnDefinition = "TEXT")
     private String rutaFoto ;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "oferta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UsuarioVotoOferta> votos;
 
 
     public Oferta(){

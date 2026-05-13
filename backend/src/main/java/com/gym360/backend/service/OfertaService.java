@@ -30,6 +30,15 @@ public class OfertaService {
         return ofertaRepositorio.findAll();
     }
 
+    public Oferta guardarOferta(Oferta oferta) {
+        return ofertaRepositorio.save(oferta);
+    }
+    public void eliminarOferta(int id) {
+
+        ofertaRepositorio.deleteById(id);
+    }
+
+
     @Transactional
     public void procesarVoto(int usuarioId, int ofertaId, int valorNuevo) {
 

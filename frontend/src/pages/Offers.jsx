@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Offers.css';
 import Offer from '../components/Offer';
 import Navbar from '../components/Navbar';
-
-// Importamos nuestro servicio limpio
 import { obtenerOfertas } from '../services/ofertaService';
 
 const Offers = () => {
     const [offers, setOffers] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const cargarOfertas = async () => {
             try {
-                // Llamamos a la función humilde del servicio
                 const datosOfertas = await obtenerOfertas();
                 setOffers(datosOfertas);
-
             } catch (error) {
-                console.log("Error al cargar ofertas:", error);
+                console.log(error);
             }
         };
         
@@ -33,17 +31,28 @@ const Offers = () => {
                     <header className="offers-header">
                         <h1>PLANES & <span className="text-gradient">OFERTAS</span></h1>
                         <p>Eleva tu rendimiento al siguiente nivel.</p>
+                        
+                        <button 
+                            className="offer-button" 
+                            onClick={() => navigate('/crear-oferta')}
+                            style={{ marginTop: '1.5rem', display: 'inline-block' }}
+                        >
+                            + Añadir Oferta
+                        </button>
                     </header>
 
                     <div className="offers-list">
-                        {/* Si hay ofertas, las pintamos. Si la BBDD está vacía, mostramos el mensaje */}
                         {offers.length > 0 ? (
                             offers.map(offer => (
-                                <Offer key={offer.id} {...offer} />
+                                <Offer 
+                                    key={offer.id} 
+                                    {...offer} 
+                                    onEliminar={(idBorrado) => setOffers(offers.filter(o => o.id !== idBorrado))}
+                                />
                             ))
                         ) : (
                             <p style={{ textAlign: 'center', color: '#888', marginTop: '2rem' }}>
-                                Aún no hay ofertas disponibles. (Inicializa la BBDD 🚀)
+                                Aún no hay ofertas disponibles.
                             </p>
                         )}
                     </div>

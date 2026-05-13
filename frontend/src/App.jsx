@@ -13,6 +13,8 @@ import ProtectedRoute from './utils/ProtectedRoute'
 import Progreso from './pages/Progreso'
 import GymDetails from './pages/GymDetails'
 import Nutricion from './pages/Nutricion'
+import AddOffer from './pages/AddOffer'
+
 
 
 
@@ -33,6 +35,7 @@ function App() {
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/progreso"  element={<Progreso/>}           />
+            <Route path="/crear-oferta" element={<AddOffer />} />
             <Route path="/gym/:id" element={<GymDetails />} />
           </Route>
 

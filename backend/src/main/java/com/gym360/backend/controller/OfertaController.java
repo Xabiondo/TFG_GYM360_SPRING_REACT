@@ -12,7 +12,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ofertas")
-@CrossOrigin(origins = "*")
+// 1. AQUÍ ESTÁ EL ARREGLO DE LOS PERMISOS (CORS) PARA DEJARTE BORRAR
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class OfertaController {
 
     @Autowired
@@ -20,7 +21,6 @@ public class OfertaController {
 
     @GetMapping
     public ResponseEntity<List<Oferta>> obtenerOfertas() {
-        // Pedimos todas las ofertas al servicio (asumiendo que tienes este método creado)
         List<Oferta> listaOfertas = ofertaService.obtenerTodas();
         return ResponseEntity.ok(listaOfertas);
     }
@@ -28,18 +28,32 @@ public class OfertaController {
     @PostMapping("/votar")
     public ResponseEntity<?> votarOferta(@RequestBody Map<String, Integer> votoUsuario) {
 
-        // Esto saca los datos del paquete JSON que manda React
         int ofertaId = votoUsuario.get("ofertaId");
         int usuarioId = votoUsuario.get("usuarioId");
         int valor = votoUsuario.get("valor");
 
-        // Llamamos a la lógica dura del servicio
         ofertaService.procesarVoto(usuarioId, ofertaId, valor);
 
-        // Devolvemos el OK
         Map<String, String> respuesta = new HashMap<>();
         respuesta.put("mensaje", "Voto guardado");
 
         return ResponseEntity.ok(respuesta);
+    }
+
+    @PostMapping
+    public ResponseEntity<Oferta> crearOferta(@RequestBody Oferta oferta) {
+        Oferta nuevaOferta = ofertaService.guardarOferta(oferta);
+        return ResponseEntity.ok(nuevaOferta);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> borrarOferta(@PathVariable int id) {
+        try {
+            ofertaService.eliminarOferta(id);
+            Map<String, String> respuesta = new HashMap<>();
+            respuesta.put("mensaje", "Oferta eliminada correctamente");
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al eliminar la oferta");
+        }
     }
 }

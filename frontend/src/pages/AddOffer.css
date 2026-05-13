@@ -1,0 +1,75 @@
+.add-offer-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.add-offer-card {
+  background-color: #0f1115;
+  border: 1px solid #272a30;
+  border-radius: 12px;
+  padding: 2.5rem;
+}
+
+.add-offer-card h2 {
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.add-offer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.row-group {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.half-width {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #a1a1aa;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: #181a20;
+  border: 1px solid #272a30;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--acent);
+}
+
+.submit-offer {
+  margin-top: 1rem;
+  width: 100%;
+}
