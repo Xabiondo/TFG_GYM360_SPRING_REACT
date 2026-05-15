@@ -19,7 +19,7 @@ const SearchBar = ({
   return (
     <div className="search-container">
 
-      {/* 1. Buscador principal */}
+
       <input
         type="text"
         className="search-input main-search"
@@ -28,7 +28,7 @@ const SearchBar = ({
         onChange={(e) => setBusqueda(e.target.value)}
       />
 
-      {/* 2. Filtro de Abiertos (con interruptor por si queremos ocultarlo) */}
+
       {mostrarAbierto && (
         <select
           className="search-select"
@@ -40,7 +40,7 @@ const SearchBar = ({
         </select>
       )}
 
-      {/* 3. Filtro de Ubicación */}
+
       {mostrarUbicacion && (
         <input
           type="text"
@@ -51,7 +51,7 @@ const SearchBar = ({
         />
       )}
 
-      {/* 4. Filtro de Precio */}
+
       {mostrarPrecio && (
         <div className="price-group">
           <select

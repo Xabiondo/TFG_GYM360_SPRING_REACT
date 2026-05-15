@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-// Importamos solo lo del peso
 import { getPesoHistorial, registrarPeso } from '../services/progresoService';
 import './Progreso.css';
 
 const Progreso = () => {
-    // 1. Estados
     const [pesos, setPesos] = useState([]);
     const [inputPeso, setInputPeso] = useState("");
     
-    // Sacamos la fecha de hoy para ponerla por defecto en el selector
     const fechaActual = new Date();
     const añoHoy = fechaActual.getFullYear();
     
@@ -25,17 +22,14 @@ const Progreso = () => {
     }
     const hoyString = añoHoy + "-" + mesHoy + "-" + diaHoy;
 
-    // Estado para la fecha elegida
     const [inputFecha, setInputFecha] = useState(hoyString);
 
-    // 2. Pillamos el usuario
     const userString = localStorage.getItem("user");
     let user = null;
     if (userString !== null) {
         user = JSON.parse(userString);
     }
 
-    // 3. Cargar historial al inicio
     useEffect(() => {
         const cargarDatos = async () => {
             if (user !== null && user.id !== undefined) {
@@ -46,27 +40,22 @@ const Progreso = () => {
         cargarDatos();
     }, []);
 
-    // 4. Guardar un nuevo peso
     const handlePeso = async () => {
         if (inputPeso === "") {
-            return; // Si no hay peso, no hacemos nada
+            return; 
         }
         if (inputFecha === "") {
-            return; // Si no hay fecha, no hacemos nada
+            return; 
         }
         
-        // Enviamos el usuario, el peso y la FECHA elegida
         await registrarPeso(user.id, inputPeso, inputFecha);
         
-        // Recargamos los datos para que la gráfica se actualice
         const nuevosPesos = await getPesoHistorial(user.id);
         setPesos(nuevosPesos);
         
-        // Vaciamos la cajita del peso
         setInputPeso("");
     };
 
-    // 5. Calcular peso actual (el último de la lista)
     let pesoActual = "?";
     if (pesos.length > 0) {
         const ultimoIndice = pesos.length - 1;
@@ -78,7 +67,6 @@ const Progreso = () => {
             <Navbar />
             <div className="pg-container">
 
-                {/* TARJETA 1: REGISTRAR PESO */}
                 <div className="pg-card">
                     <h2>Control de Peso</h2>
                     <div className="pg-stats-grid">
@@ -106,22 +94,21 @@ const Progreso = () => {
                     </div>
                 </div>
 
-                {/* TARJETA 2: GRÁFICA */}
                 <div className="pg-card">
                     <h2>Tu Evolución</h2>
                     <div style={{ width: '100%', height: 300, marginTop: '20px' }}>
                         <ResponsiveContainer>
-                            <LineChart data={pesos} margin={{ top: 5, right: 20, bottom: 5, left: -20 }}>
+                            <LineChart data={pesos} margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#272a30" vertical={false} />
                                 <XAxis 
                                     dataKey="fecha" 
                                     stroke="#a1a1aa" 
                                     fontSize={12} 
-                                    tickMargin={10}
+                                    tickMargin={15}
                                     tickFormatter={(str) => {
                                         const partes = str.split('-');
                                         if (partes.length === 3) {
-                                            return partes[2] + "/" + partes[1]; // Pone "Dia/Mes"
+                                            return partes[2] + "/" + partes[1];
                                         } else {
                                             return str;
                                         }

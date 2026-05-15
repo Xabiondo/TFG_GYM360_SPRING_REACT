@@ -2,7 +2,6 @@
 
   --ink-black: #000814;
   --prussian-blue: #001d3d;
-  --regal-navy: #003566;
   --acent: #3b82f6 ; 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,7 +22,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--gray); /* Nos aseguramos de que el body sea azul muy oscuro */
+  background-color: var(--gray); 
   color: white;
 }
 
@@ -44,7 +43,7 @@ a:hover {
   color: var(--school-bus-yellow);
 }
 
-/* Botones generales */
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

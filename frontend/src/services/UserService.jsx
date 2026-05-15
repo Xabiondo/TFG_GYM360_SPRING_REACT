@@ -17,11 +17,7 @@ export const updateUser = async (userId, datos) => {
   return response.json();
 };
 
-/**
- * Sube la foto de perfil al servidor.
- * El backend la guarda en /resources/static/images/user/
- * y devuelve el nombre del archivo guardado.
- */
+
 export const uploadProfilePhoto = async (formData) => {
   const response = await fetch(`${API_URL}/usuarios/foto`, {
     method: "POST",

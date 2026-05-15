@@ -27,26 +27,34 @@ const MyProfile = () => {
     try {
       let fotoNombre = user.fotoPerfil;
 
+      // Si has elegido una foto nueva durante el modo edición, la subimos ahora
       if (photoFile) {
         const data = new FormData();
         data.append("foto", photoFile);
         data.append("userId", user.id);
         const res = await uploadProfilePhoto(data);
-        fotoNombre = res.nombreArchivo;
+        fotoNombre = res.nombreArchivo; 
       }
 
+      // Guardamos en BD
       await updateUser(user.id, { nombre, fotoPerfil: fotoNombre });
+
+      // Actualizamos tu Contexto y LocalStorage
       login({ ...user, nombre, fotoPerfil: fotoNombre });
 
+      // Limpiamos y salimos del modo edición
       setEditMode(false);
-      alert("¡Perfil actualizado!");
+      setPhotoFile(null);
+      setPhotoPreview(`${API_BASE_URL}/images/user/${fotoNombre}`);
+
     } catch (err) {
       console.error(err);
-      alert("Error al guardar");
+      alert("Error al guardar los cambios");
     }
   };
 
   const handleCancel = () => {
+    // Si cancela, devolvemos todo a como estaba antes
     setNombre(user.nombre || "");
     setPhotoFile(null);
     setPhotoPreview(user.fotoPerfil ? `${API_BASE_URL}/images/user/${user.fotoPerfil}` : null);
@@ -83,15 +91,18 @@ const MyProfile = () => {
                 const file = e.target.files[0];
                 if (file) {
                   setPhotoFile(file);
-                  setPhotoPreview(URL.createObjectURL(file));
+                  setPhotoPreview(URL.createObjectURL(file)); // Preview instantánea
                 }
               }}
               accept="image/*"
             />
 
-            <button className="btn-change-photo" onClick={() => fileInputRef.current.click()}>
-              Cambiar foto
-            </button>
+            {/* SOLO sale si le has dado a Editar Perfil */}
+            {editMode && (
+              <button className="btn-change-photo" onClick={() => fileInputRef.current.click()}>
+                Cambiar foto
+              </button>
+            )}
 
           </div>
 

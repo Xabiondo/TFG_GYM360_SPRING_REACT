@@ -1,24 +1,24 @@
-/* Comentario.css */
+
 .comentario-card {
     display: flex;
     gap: 15px;
     padding: 16px;
-    background-color: rgba(255, 255, 255, 0.03); /* Un gris muuuuy sutil */
-    border: 1px solid var(--border); /* Usa la variable de tus otros CSS */
+    background-color: rgba(255, 255, 255, 0.03); 
+    border: 1px solid var(--border); 
     border-radius: 12px;
     margin-bottom: 12px;
     transition: background-color 0.2s ease;
 }
 
 .comentario-card:hover {
-    background-color: rgba(255, 255, 255, 0.06); /* Se ilumina un poco al pasar el ratón */
+    background-color: rgba(255, 255, 255, 0.06); 
 }
 
 /* ===========================
    ZONA DEL AVATAR
    =========================== */
 .comentario-avatar-wrapper {
-    flex-shrink: 0; /* Para que el avatar no se aplaste si el texto es muy largo */
+    flex-shrink: 0; 
 }
 
 .comentario-avatar {
@@ -26,10 +26,10 @@
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--accent); /* Aro con el color de tu web */
+    border: 2px solid var(--accent); 
 }
 
-/* El círculo con la letra si no hay foto */
+
 .comentario-avatar-placeholder {
     width: 48px;
     height: 48px;
@@ -44,9 +44,6 @@
     color: var(--text-main);
 }
 
-/* ===========================
-   ZONA DEL TEXTO
-   =========================== */
 .comentario-contenido {
     flex: 1;
     display: flex;
@@ -68,5 +65,5 @@
     font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.5;
-    word-break: break-word; /* Evita que si alguien escribe "jajajaja" sin espacios rompa la pantalla */
+    word-break: break-word; 
 }

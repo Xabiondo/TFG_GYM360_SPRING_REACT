@@ -82,20 +82,13 @@
     font-weight: 600;
 }
 
-/* ========================
-   GRID (DATOS Y COMENTARIOS)
-   ======================== */
+
 .details-grid {
     display: grid;
     grid-template-columns: 1fr 1.8fr; /* La columna derecha es más ancha */
     gap: 25px;
 }
 
-@media (max-width: 768px) {
-    .details-grid {
-        grid-template-columns: 1fr;
-    }
-}
 
 .details-card {
     background: var(--bg-card);
@@ -116,9 +109,7 @@
     text-transform: uppercase;
 }
 
-/* ========================
-   SECCIÓN COMENTARIOS
-   ======================== */
+
 .comments-list {
     max-height: 350px;
     overflow-y: auto;
@@ -169,9 +160,6 @@
     font-size: 0.95rem;
 }
 
-/* ========================
-   CAJA PARA ESCRIBIR
-   ======================== */
 .comment-form {
     display: flex;
     flex-direction: column;

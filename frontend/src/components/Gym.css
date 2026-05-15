@@ -1,4 +1,4 @@
-/* --- TARJETA INDIVIDUAL --- */
+
 .gym-card {
   display: flex;
   background-color: var(--bg-card);
@@ -46,7 +46,7 @@
   text-transform: uppercase;
 }
 
-/* --- CONTENIDO --- */
+
 .gym-content {
   flex: 1;
   padding: 1.5rem 2rem;
@@ -105,12 +105,12 @@
   margin-top: 0.5rem;
 }
 
-/* --- BOTÓN --- */
+
 .gym-actions {
   margin-top: auto;
 }
 
-/* --- BOTÓN GIMNASIOS (Estilo Outline) --- */
+
 .gym-btn {
   background-color: transparent;
   color: var(--acent);

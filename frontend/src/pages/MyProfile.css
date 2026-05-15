@@ -36,7 +36,7 @@
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--accent, #fff);
+  border: 2px solid #007BFF; /* Mítico azul en el borde de la foto */
 }
 
 .role-badge {
@@ -52,17 +52,18 @@
 .btn-change-photo {
   margin-top: 15px;
   background: transparent;
-  color: var(--accent, #fff);
-  border: 1px solid var(--accent, #fff);
+  color: #007BFF; /* Mítico azul */
+  border: 1px solid #007BFF;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: bold;
 }
 
 .btn-change-photo:hover {
-  background: var(--accent, #fff);
-  color: #000;
+  background: #007BFF;
+  color: #fff;
 }
 
 /* --- SECCIÓN DATOS --- */
@@ -115,8 +116,8 @@
 }
 
 .save-btn {
-  background-color: var(--accent, #f1f1f1);
-  color: #000;
+  background-color: #007BFF; /* Mítico azul para Guardar / Editar */
+  color: #fff;
   border: none;
   padding: 10px 20px;
   font-weight: bold;
@@ -151,7 +152,7 @@
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  margin-left: auto; /* Esto empuja el botón a la derecha del todo */
+  margin-left: auto; /* Empuja el botón a la derecha del todo */
   transition: all 0.2s;
 }
 
@@ -159,4 +160,3 @@
   background: #ff4d4d;
   color: #fff;
 }
-

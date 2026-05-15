@@ -3,12 +3,12 @@
 .offer-card {
     display: flex;
     flex-direction: row;
-    background-color: #0f1115; /* Fondo principal muy oscuro */
-    border: 1px solid #272a30; /* Borde sutil */
+    background-color: #0f1115; 
+    border: 1px solid #272a30; 
     border-radius: 12px;
     padding: 0;
     overflow: hidden;
-    transition: border-color 0.2s ease; /* Transición suave solo en el borde */
+    transition: border-color 0.2s ease; 
     height: 250px;
     margin-bottom: 2rem;
 }
@@ -33,7 +33,7 @@
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    background-color: #181a20; /* Un gris un pelín más claro para diferenciar */
+    background-color: #181a20; 
     min-width: 60px;
     border-right: 1px solid #272a30;
 }
@@ -59,7 +59,7 @@
     color: var(--acent);
 }
 
-/* --- CONTENIDO DE LA OFERTA --- */
+
 .offer-content {
     flex: 1;
     padding: 1.5rem;
@@ -75,7 +75,7 @@
 }
 
 .offer-description {
-    color: #cccccc; /* El mismo color que los subtítulos de tus gimnasios */
+    color: #cccccc; 
     font-size: 0.95rem;
     margin: 1rem 0;
     display: -webkit-box;
@@ -84,7 +84,7 @@
     overflow: hidden;
 }
 
-/* --- FOOTER Y PRECIO --- */
+
 .offer-footer {
     display: flex;
     align-items: center;
@@ -95,11 +95,11 @@
 .price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--acent); /* El precio destaca con tu color de acento */
+    color: var(--acent); 
     margin: 0;
 }
 
-/* Botón humilde tipo "outline" */
+
 .offer-button {
     padding: 0.8rem 1.5rem;
     background-color: transparent;

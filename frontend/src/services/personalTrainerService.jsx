@@ -13,8 +13,6 @@ export const getAssessment = async (mensaje) => {
     throw new Error('Error al generar el plan con el entrenador');
   }
   
-  // Tu backend de Java ahora devuelve un String (que es un JSON válido) con response.text()
-  // React necesita parsearlo a un objeto real
   const textResponse = await response.text();
   try {
       return JSON.parse(textResponse);
@@ -27,11 +25,6 @@ export const getAssessment = async (mensaje) => {
 export const saveAssessment = async (dietaData) => {
   const user = JSON.parse(localStorage.getItem("user"));
   
-  // Tu Java espera recibir la entidad UsuarioDieta entera.
-  // IMPORTANTE: Asegúrate de que el objeto "usuario" esté anidado,
-  // como hicimos en los comentarios del gimnasio, si tu backend lo requiere así.
-  // Si en Java UsuarioDieta tiene private Integer usuarioId; entonces esto está bien.
-  // Si en Java UsuarioDieta tiene private Usuario usuario; entonces hay que cambiarlo.
   const dataToSave = { ...dietaData, usuarioId: user.id };
 
   const response = await fetch(`${API_URL}/save`, {

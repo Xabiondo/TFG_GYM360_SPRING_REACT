@@ -1,42 +1,35 @@
-/* --- CONTENEDOR DEL BUSCADOR --- */
 .search-container {
   display: flex;
   gap: 15px;
-  background-color: #0f1115; /* El fondo oscuro que pediste */
+  background-color: #0f1115;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
-  border: 1px solid #333333; /* Un borde gris muy sutil para que no flote en la nada */
+  border: 1px solid #333333;
 }
 
-/* --- CAJA DE TEXTO Y DESPLEGABLE --- */
 .search-input, 
 .search-select {
-  background-color: #0a0a0a; /* Un negro un pelín más oscuro para las cajas */
-  color: #ffffff; /* Texto en blanco puro */
-  border: 1px solid #333333; /* Borde normal por defecto */
+  background-color: #0a0a0a;
+  color: #ffffff;
+  border: 1px solid #333333;
   padding: 15px;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
-  transition: all 0.3s; /* Transición suave */
+  transition: all 0.3s;
 }
 
-/* El input ocupa el espacio que sobra */
 .search-input {
   flex: 1; 
 }
 
-/* Color del texto de relleno (placeholder) */
 .search-input::placeholder {
   color: #888888;
 }
 
-/* --- EL MAGICO AZUL ESPECIAL --- */
-/* Cuando haces clic en la caja de texto o en el select, se ponen de tu color azul */
 .search-input:focus, 
 .search-select:focus {
-  border-color: #646cff; /* El borde se vuelve de tu azul especial */
-  box-shadow: 0 0 8px rgba(100, 108, 255, 0.2); /* Un brillito azul súper sutil y pro */
+  border-color: #646cff;
+  box-shadow: 0 0 8px rgba(100, 108, 255, 0.2);
 }
-
