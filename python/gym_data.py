@@ -63,7 +63,6 @@ def buscar_y_guardar(query, connection):
     cursor = connection.cursor()
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
     
-    # Parámetros iniciales
     params = {
         'query': query,
         'key': API_KEY
@@ -78,7 +77,7 @@ def buscar_y_guardar(query, connection):
         
 
         if response.get('status') != 'OK' and response.get('status') != 'ZERO_RESULTS':
-            print(f"⚠️ Atención: Estado de la API: {response.get('status')}")
+            print(f" Atención: Estado de la API: {response.get('status')}")
             
         resultados = response.get('results', [])
         
@@ -116,16 +115,13 @@ def buscar_y_guardar(query, connection):
             
         connection.commit()
         
-        # Gestionar la paginación
         next_token = response.get('next_page_token')
         if not next_token:
-            break # Si no hay más páginas, salimos del bucle
+            break 
         
-        # CRÍTICO: Google necesita tiempo para validar el token. 2s suele ser poco.
         print("Esperando 4 segundos para activar el next_page_token...")
         time.sleep(4) 
         
-        # En las siguientes peticiones SOLO se envía el token y la API key
         params = {'pagetoken': next_token, 'key': API_KEY}
 
     print(f"Finalizado: {total_obtenidos} registros procesados para '{query}'.\n")
